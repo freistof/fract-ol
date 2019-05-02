@@ -19,6 +19,9 @@
 # include <unistd.h>
 # include <stdio.h> // remove
 
+# define SCREEN_W 1280
+# define SCREEN_H 800
+
 typedef struct			s_mlx
 {
 	void				*mlx;
@@ -27,6 +30,6 @@ typedef struct			s_mlx
 
 int						deal_key(int key);
 
-void					mandelbrot(t_mlx mlx);
+void					mandelbrot(t_mlx *mlx);
 
 #endif

@@ -30,6 +30,10 @@ $(NAME):
 		gcc -o $(NAME) $(FLAGS) $(SRCS) -I $(LIBMS) -L $(LIBMS) \
 		-lmlx -L $(LIBFT) -lft -framework OpenGL -framework AppKit
 
+again:
+	gcc -o $(NAME) $(FLAGS) $(SRCS) -I $(LIBMS) -L $(LIBMS) \
+		-lmlx -L $(LIBFT) -lft -framework OpenGL -framework AppKit
+
 clean:
 		make -C $(LIBM) clean
 		make -C $(LIBFT) clean

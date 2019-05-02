@@ -14,15 +14,15 @@
 
 void			open_window(char fractol)
 {
-	t_mlx		mlx;
+	t_mlx		*mlx;
 
-//	mlx = malloc(sizeof(t_mlx));
-	mlx.mlx = mlx_init();
-	mlx.win = mlx_new_window(mlx.mlx, 1000, 1000, "fract'ol");
-	mlx_hook(mlx.win, 2, 2, deal_key, NULL);
+	mlx = malloc(sizeof(t_mlx));
+	mlx->mlx = mlx_init();
+	mlx->win = mlx_new_window(mlx->mlx, SCREEN_W, SCREEN_H, "fract'ol");
+	mlx_hook(mlx->win, 2, 2, deal_key, NULL);
 	if (fractol == 'm')
 		mandelbrot(mlx);
-	mlx_loop(mlx.mlx);
+	mlx_loop(mlx->mlx);
 }
 
 int				main(int argc, char **argv)
