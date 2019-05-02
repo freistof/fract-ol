@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   fractol.h                                          :+:    :+:            */
+/*   mandelbrot.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fblom <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/05/02 15:07:09 by fblom         #+#    #+#                 */
-/*   Updated: 2019/05/02 15:07:10 by fblom         ########   odam.nl         */
+/*   Created: 2019/05/02 17:43:07 by fblom         #+#    #+#                 */
+/*   Updated: 2019/05/02 17:43:07 by fblom         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRACTOL_H
-#define FRACTOL_H
+#include "fractol.h"
 
-# include "minilibx_macos/mlx.h"
-# include "libft/libft.h"
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h> // remove
-
-typedef struct			s_mlx
+void				mandelbrot(t_mlx mlx)
 {
-	void				*mlx;
-	void				*win;
-}						t_mlx;
+	int				i;
+	long long		x;
+	double		c;
+	long long 		res;
 
-int						deal_key(int key);
-
-void					mandelbrot(t_mlx mlx);
-
-#endif
+	i = 0;
+	x = 0;
+	c = -1.38;
+	while (i < 5)
+	{
+		res = x * x + c;
+		x = res;
+		mlx_pixel_put(mlx.mlx, mlx.win, x, 300, 0xfffafa);
+		printf("%lli\n", res);
+		i++;
+	}
+}

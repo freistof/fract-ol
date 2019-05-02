@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   fractol.h                                          :+:    :+:            */
+/*   keys.c                                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fblom <marvin@codam.nl>                      +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/05/02 15:07:09 by fblom         #+#    #+#                 */
-/*   Updated: 2019/05/02 15:07:10 by fblom         ########   odam.nl         */
+/*   Created: 2019/05/02 17:11:10 by fblom         #+#    #+#                 */
+/*   Updated: 2019/05/02 17:11:10 by fblom         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FRACTOL_H
-#define FRACTOL_H
+#include "fractol.h"
 
-# include "minilibx_macos/mlx.h"
-# include "libft/libft.h"
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h> // remove
-
-typedef struct			s_mlx
+int				deal_key(int key)
 {
-	void				*mlx;
-	void				*win;
-}						t_mlx;
-
-int						deal_key(int key);
-
-void					mandelbrot(t_mlx mlx);
-
-#endif
+	if (key == 53)
+		exit(1);
+	return (0);
+}

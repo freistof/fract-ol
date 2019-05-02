@@ -1,16 +1,16 @@
-##************************************************************************** */
-##                                                                           */
-##                                                       ::::::::            */
-##  create_map.c                                       :+:    :+:            */
-##                                                    +:+                    */
-##  By: nde-wild <marvin@codam.nl>                   +#+                     */
-##                                                  +#+                      */
-##  Created: 2019/03/06 11:03:30 by nde-wild      #+#    #+#                 */
-##  Updated: 2019/03/06 11:03:33 by nde-wild      ########   odam.nl         */
-##                                                                           */
-##************************************************************************** */
+#******************************************************************************#
+#                                                                              #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: fblom <marvin@codam.nl>                      +#+                      #
+#                                                    +#+                       #
+#    Created: 2019/05/02 15:07:19 by fblom         #+#    #+#                  #
+#    Updated: 2019/05/02 15:07:19 by fblom         ########   odam.nl          #
+#                                                                              #
+#******************************************************************************#
 
-NAME = fractal
+NAME = fractol
 
 FLAGS = -Wall -Werror -Wextra
 
@@ -20,24 +20,24 @@ LIBFT = libft/
 
 LIBMS = minilibx_macos
 
-SRCS = fractol.c
+SRCS = fractol.c keys.c mandelbrot.c
 
 all: $(NAME)
 
 $(NAME):
-		@make -C $(LIBM)
-		@make -C $(LIBFT)
-		@gcc -o $(NAME) $(FLAGS) $(SRCS) -I $(LIBMS) -L $(LIBMS) \
+		make -C $(LIBM)
+		make -C $(LIBFT)
+		gcc -o $(NAME) $(FLAGS) $(SRCS) -I $(LIBMS) -L $(LIBMS) \
 		-lmlx -L $(LIBFT) -lft -framework OpenGL -framework AppKit
 
 clean:
-		@make -C $(LIBM) clean
-		@make -C $(LIBFT) clean
+		make -C $(LIBM) clean
+		make -C $(LIBFT) clean
 
 fclean: clean
-		rm -rf fdf
-		@make -C $(LIBFT) fclean
+		rm -rf $(NAME)
+		make -C $(LIBFT) fclean
 
 re: fclean all
-		@make -C $(LIBM) re
-		@make -C $(LIBFT) re
+		make -C $(LIBM) re
+		make -C $(LIBFT) re
