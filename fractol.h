@@ -30,6 +30,6 @@ typedef struct			s_mlx
 
 int						deal_key(int key);
 
-void					mandelbrot(t_mlx *mlx);
+t_mlx					mandelbrot(t_mlx mlx);
 
 #endif

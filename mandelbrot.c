@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-void				mandelbrot(t_mlx *mlx)
+t_mlx				mandelbrot(t_mlx mlx)
 {
 	float			cx = 0, cy = 0;
 	float			scale = 0.003;
@@ -42,9 +42,10 @@ void				mandelbrot(t_mlx *mlx)
 			}
 			if (lp > 255)
 				lp = 0;
-			mlx_pixel_put(mlx->mlx, mlx->win, x + 640, y + 400, lp);
+			mlx_pixel_put(mlx.mlx, mlx.win, x + 640, y + 400, lp);
 			y++;
 		}
 		x++;
 	}
+	return (mlx);
 }
