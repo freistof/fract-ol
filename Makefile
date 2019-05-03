@@ -20,7 +20,7 @@ LIBFT = libft/
 
 LIBMS = minilibx_macos
 
-SRCS = fractol.c keys.c mandelbrot.c
+SRCS = fractol.c keys.c mandelbrot.c julia.c
 
 all: $(NAME)
 

@@ -12,40 +12,44 @@
 
 #include "fractol.h"
 
-t_mlx				mandelbrot(t_mlx mlx)
+void					mandelbrot(t_mlx *mlx, t_man *man)
 {
-	float			cx = 0, cy = 0;
-	float			scale = 0.003;
-	short			limit = 4;
-	short			lp;
-	float			a1, b1, a2, b2;
-	int				x = -640, y = -400;
-	float			ax, ay;
-
-	while (x < SCREEN_W / 2)
+	printf("%f\n", man->scale);
+	while (man->x < SCREEN_W / 2)
 	{
-		y = SCREEN_H / 2 * -1;
-		while (y < SCREEN_H / 2)
+		man->y = SCREEN_H / 2 * -1;
+		while (man->y < SCREEN_H / 2)
 		{
-			ax = cx + x * scale;
-			ay = cy + y * scale;
-			a1 = ax;
-			b1 = ay;
-			lp = 0;
-			while (lp <= 255 && a1*a1 + b1*b1 <= limit)
+			man->ax = man->cx + man->x * man->scale;
+			man->ay = man->cy + man->y * man->scale;
+			man->a1 = man->ax;
+			man->b1 = man->ay;
+			man->lp = 0;
+			while (man->lp <= 1000 && man->a1 * man->a1 + man->b1 * man->b1 <= man->limit)
 			{
-				lp += 1;
-				a2 = a1 * a1 - b1 * b1 + ax;
-				b2 = 2 * a1 * b1 + ay;
-				a1 = a2;
-				b1 = b2;
+				man->lp += 1;
+				man->a2 = man->a1 * man->a1 - man->b1 * man->b1 + man->ax;
+				man->b2 = 2 * man->a1 * man->b1 + man->ay;
+				man->a1 = man->a2;
+				man->b1 = man->b2;
 			}
-			if (lp > 255)
-				lp = 0;
-			mlx_pixel_put(mlx.mlx, mlx.win, x + 640, y + 400, lp);
-			y++;
+			if (man->lp > 1000)
+				man->lp = 0;
+			mlx_pixel_put(mlx->mlx, mlx->win, man->x + SCREEN_W / 2, man->y + SCREEN_H / 2, man->lp);
+			man->y++;
 		}
-		x++;
+		man->x++;
 	}
-	return (mlx);
+}
+
+void				set_mandelbrot(t_mlx *mlx, t_man *man)
+{
+	man->cx = 0;
+	man->cy = 0;
+	man->scale = 0.004;
+	man->limit = 2000;
+	man->lp = 0;
+	man->x = SCREEN_W / 2 * -1;
+	man->y = SCREEN_H / 2 * -1;
+	mandelbrot(mlx, man);
 }
