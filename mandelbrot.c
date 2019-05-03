@@ -42,7 +42,7 @@ void				mandelbrot(t_mlx *mlx)
 			}
 			if (lp > 255)
 				lp = 0;
-			mlx_pixel_put(mlx->mlx, mlx->win, x + 640, y + 400, lp * 10000);
+			mlx_pixel_put(mlx->mlx, mlx->win, x + 640, y + 400, lp);
 			y++;
 		}
 		x++;
