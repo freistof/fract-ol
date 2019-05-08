@@ -12,30 +12,41 @@
 
 #include "fractol.h"
 
-void				open_window(char fractol)
+void				open_window(t_keeper *keeper)
 {
-	t_mlx			*mlx;
-	t_man			*man;
-	t_keeper		*keeper;
+//	mlx_hook(keeper->mlx->win, 2, 2, deal_key, NULL);
+//	mlx_hook(keeper->mlx->win, 17, 17, closing, NULL);
+	mlx_hook(keeper->mlx->win, 4, 4,  mouse_press, keeper);
+	mandelbrot(keeper->mlx, keeper->man);
+	mlx_loop(keeper->mlx->mlx);
+}
 
-	mlx = malloc(sizeof(t_mlx));
-	man = malloc(sizeof(t_man));
-	keeper = malloc(sizeof(t_keeper));
-	keeper->mlx = mlx;
-	keeper->man = man;
-	if (!fractol)
+/*
+**
+*/
+
+void				choose_fractal(char *argument)
+{
+	t_keeper	*keeper = NULL;
+	t_mlx		*mlx = NULL;
+	t_man		*man = NULL;
+
+	if (!keeper)
+		keeper = malloc(sizeof(t_keeper));
+	if (!mlx)
 	{
-		ft_putendl("not a valid fractal");
-		return ;
+		mlx = malloc(sizeof(t_mlx));
+		keeper->mlx = mlx;
+		mlx->mlx = mlx_init();
+		mlx->win = mlx_new_window(keeper->mlx->mlx, SCREEN_W, SCREEN_H, "fract'ol");
 	}
-	mlx->mlx = mlx_init();
-	mlx->win = mlx_new_window(mlx->mlx, SCREEN_W, SCREEN_H, "fract'ol");
-	mlx_hook(mlx->win, 2, 2, deal_key, NULL);
-	mlx_hook(mlx->win, 17, 17, closing, NULL);
-	mlx_hook(mlx->win, 4, 4,  mouse_press, keeper);
-	if (fractol == 'm')
-		set_mandelbrot(mlx, man);
-	mlx_loop(mlx->mlx);
+	if (ft_strequ("-m", argument))
+	{
+		man = malloc(sizeof(t_man));
+		set_mandelbrot(man);
+		keeper->man = man;
+	}
+	open_window(keeper);
 }
 
 /*
@@ -53,11 +64,6 @@ int				main(int argc, char **argv)
 		ft_putendl("-s for Sierpienski Gasket");
 		return (0);
 	}
-	if (ft_strequ("-m", argv[1]))
-		open_window('m');
-	else if (ft_strequ("-j", argv[1]))
-		open_window('j');
-	else
-		open_window(0);
+	choose_fractal(argv[1]);
 	return (0);
 }

@@ -14,10 +14,10 @@
 
 void					mandelbrot(t_mlx *mlx, t_man *man)
 {
-	printf("%f\n", man->scale);
+	man->x = man->thex;
 	while (man->x < SCREEN_W / 2)
 	{
-		man->y = SCREEN_H / 2 * -1;
+		man->y = man->they;
 		while (man->y < SCREEN_H / 2)
 		{
 			man->ax = man->cx + man->x * man->scale;
@@ -42,14 +42,13 @@ void					mandelbrot(t_mlx *mlx, t_man *man)
 	}
 }
 
-void				set_mandelbrot(t_mlx *mlx, t_man *man)
+void				set_mandelbrot(t_man *man)
 {
 	man->cx = 0;
 	man->cy = 0;
-	man->scale = 0.004;
-	man->limit = 2000;
+	man->scale = 0.003;
+	man->limit = 500;
 	man->lp = 0;
-	man->x = SCREEN_W / 2 * -1;
-	man->y = SCREEN_H / 2 * -1;
-	mandelbrot(mlx, man);
+	man->thex = SCREEN_W / 2 * -1;
+	man->they = SCREEN_H / 2 * -1;
 }

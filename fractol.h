@@ -22,6 +22,7 @@
 # define SCREEN_W 1280
 # define SCREEN_H 800
 # define SCROLL_UP 5
+# define SCROLL_DOWN 4
 
 typedef struct			s_mlx
 {
@@ -42,6 +43,8 @@ typedef struct 			s_man
 	float				b2;
 	int					x;
 	int					y;
+	int					thex;
+	int					they;
 	float				ax;
 	float				ay;
 }						t_man;
@@ -58,9 +61,9 @@ int						closing(void *param);
 int						mouse_press(int button, int x, int y, t_keeper *keeper);
 
 
-void					open_window(char fractol);
+void					open_window(t_keeper *keeper);
 
-void					set_mandelbrot(t_mlx *mlx, t_man *man);
+void					set_mandelbrot(t_man *man);
 void					mandelbrot(t_mlx *mlx, t_man *man);
 
 t_mlx					julia(t_mlx mlx);

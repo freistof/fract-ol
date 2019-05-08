@@ -29,16 +29,15 @@ int				closing(void *param)
 
 int				mouse_press(int button, int x, int y, t_keeper *keeper)
 {
-//	printf("button: %i\n", button);
-	printf("x: %i\n", x);
-	printf("y: %i\n", y);
+//	x = 0;
+//	y = 0;
+	keeper->man->thex = SCREEN_W / 2 * -1 - x / 2;
+	keeper->man->they = SCREEN_H / 2 * -1 - y / 2;
 	if (button == SCROLL_UP)
-	{
 		keeper->man->scale -= 0.001;
-		printf("scale: %f\n", keeper->man->scale);
-		mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
-		open_window('m');
-		mandelbrot(keeper->mlx, keeper->man);
-	}
-	return (0);
+	if (button == SCROLL_DOWN)
+		keeper->man->scale += 0.001;
+	mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
+	open_window(keeper);
+	return (1);
 }
