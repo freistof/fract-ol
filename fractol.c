@@ -14,8 +14,8 @@
 
 void				open_window(t_keeper *keeper)
 {
-//	mlx_hook(keeper->mlx->win, 2, 2, deal_key, NULL);
-//	mlx_hook(keeper->mlx->win, 17, 17, closing, NULL);
+	mlx_hook(keeper->mlx->win, 2, 2, deal_key, NULL);
+	mlx_hook(keeper->mlx->win, 17, 17, closing, NULL);
 	mlx_hook(keeper->mlx->win, 4, 4,  mouse_press, keeper);
 	mandelbrot(keeper->mlx, keeper->man);
 	mlx_loop(keeper->mlx->mlx);

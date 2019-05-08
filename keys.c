@@ -29,10 +29,10 @@ int				closing(void *param)
 
 int				mouse_press(int button, int x, int y, t_keeper *keeper)
 {
-//	x = 0;
-//	y = 0;
-	keeper->man->thex = SCREEN_W / 2 * -1 - x / 2;
-	keeper->man->they = SCREEN_H / 2 * -1 - y / 2;
+	x = 0;
+	y = 0;
+//	keeper->man->thex = (SCREEN_W + x) / 2 * -1;
+//	keeper->man->they = (SCREEN_H + y) / 2 * -1;
 	if (button == SCROLL_UP)
 		keeper->man->scale -= 0.001;
 	if (button == SCROLL_DOWN)
