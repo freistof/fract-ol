@@ -29,15 +29,14 @@ int				closing(void *param)
 
 int				mouse_press(int button, int x, int y, t_keeper *keeper)
 {
-	x = 0;
-	y = 0;
-//	keeper->man->thex = (SCREEN_W + x) / 2 * -1;
-//	keeper->man->they = (SCREEN_H + y) / 2 * -1;
+	keeper->man->thex = x - SCREEN_W / 2;
+//	x = SCREEN_W / 2 * -1 - keeper->man->thex;
+	keeper->man->they = y - SCREEN_H / 2;
 	if (button == SCROLL_UP)
-		keeper->man->scale -= 0.001;
+		keeper->man->scale -= 0.0005;
 	if (button == SCROLL_DOWN)
-		keeper->man->scale += 0.001;
+		keeper->man->scale += 0.0005;
 	mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
-	open_window(keeper);
+	mandelbrot(*(keeper->mlx), *(keeper->man));
 	return (1);
 }

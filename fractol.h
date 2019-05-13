@@ -64,7 +64,7 @@ int						mouse_press(int button, int x, int y, t_keeper *keeper);
 void					open_window(t_keeper *keeper);
 
 void					set_mandelbrot(t_man *man);
-void					mandelbrot(t_mlx *mlx, t_man *man);
+void					mandelbrot(t_mlx mlx, t_man man);
 
 t_mlx					julia(t_mlx mlx);
 
