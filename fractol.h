@@ -56,7 +56,7 @@ typedef struct 			s_keeper
 	t_man				*man;
 }						t_keeper;
 
-int						deal_key(int key);
+int						deal_key(int key, t_keeper *keeper);
 int						closing(void *param);
 int						mouse_press(int button, int x, int y, t_keeper *keeper);
 
