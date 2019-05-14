@@ -14,7 +14,7 @@
 
 void	*mlx_new_image(void *mlx_ptr,int width,int height);
 
-void					mandelbrot(t_mlx mlx, t_man man)
+/*void					mandelbrot(t_mlx mlx, t_man man)
 {
 	(void)man;
 	void				*image;
@@ -26,19 +26,13 @@ void					mandelbrot(t_mlx mlx, t_man man)
 	bpp = malloc(sizeof(int));
 	sizeline = malloc(sizeof(int));
 	endian = malloc(sizeof(int));
-	image = mlx_new_image(mlx.mlx, SCREEN_H, SCREEN_W);
+	image = mlx_new_image(mlx.mlx, SCREEN_W, SCREEN_H);
 	address = mlx_get_data_addr(image, bpp, sizeline, endian);
-	for (int i = 0; i < SCREEN_W; i++)
-	{
-		for (int j = 0; j < SCREEN_H; j++)
-		{
-			address[j * SCREEN_W + i] = 100;
-		}
-//		mlx_pixel_put(mlx.mlx, mlx.win, i, j, 500);
-	}
+	for (int i = 0; i < SCREEN_W * SCREEN_H * 4; i += 4)
+		address[i] = 120;
 	mlx_put_image_to_window(mlx.mlx, mlx.win, image, 0, 0);
-}
-/*
+}*/
+
 void					mandelbrot(t_mlx mlx, t_man man)
 {
 	void				*image;
@@ -63,7 +57,7 @@ void					mandelbrot(t_mlx mlx, t_man man)
 			man.a1 = man.ax;
 			man.b1 = man.ay;
 			man.lp = 0;
-			while (man.lp <= 1000 && man.a1 * man.a1 + man.b1 * man.b1 <= man.limit)
+			while (man.lp <= 250 && man.a1 * man.a1 + man.b1 * man.b1 <= man.limit)
 			{
 				man.lp += 1;
 				man.a2 = man.a1 * man.a1 - man.b1 * man.b1 + man.ax;
@@ -71,23 +65,27 @@ void					mandelbrot(t_mlx mlx, t_man man)
 				man.a1 = man.a2;
 				man.b1 = man.b2;
 			}
-			if (man.lp > 1000)
+			if (man.lp > 250)
 				man.lp = 0;
-			image_string[x + 3] = 50;
+			//mlx_pixel_put(mlx.mlx, mlx.win, man.x + SCREEN_W / 2, man.y + SCREEN_H / 2, man.lp);
+			image_string[x] = man.lp / 2;
 			x += 4;
-//			mlx_pixel_put(mlx.mlx, mlx.win, man.x + SCREEN_W / 2 - man.thex, man.y + SCREEN_H / 2 - man.they, man.lp);
 			man.y++;
 		}
+		mlx_put_image_to_window(mlx.mlx, mlx.win, image, 100, 100);
+	//	free(image);
+	//	free(image_string);
 		man.x++;
 	}
-}*/
+	//mlx_put_image_to_window(mlx.mlx, mlx.win, image, 0, 0);
+}
 
 void				set_mandelbrot(t_man *man)
 {
 	man->cx = 0;
 	man->cy = 0;
 	man->scale = 0.003;
-	man->limit = 10;
+	man->limit = 10000;
 	man->lp = 0;
 	man->thex = 0;
 	man->they = 0;
