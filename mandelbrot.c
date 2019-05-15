@@ -40,13 +40,15 @@ void					mandelbrot(t_mlx mlx, t_man man)
 	int					*bpp;
 	int					*sizeline;
 	int					*endian;
-	int					x = 0;
+	int					x;
 
+	
 	bpp = malloc(sizeof(int));
 	sizeline = malloc(sizeof(int));
 	endian = malloc(sizeof(int));
 	while (man.x < SCREEN_W / 2)
 	{
+		x = 0;
 		image = mlx_new_image(mlx.mlx, 1, SCREEN_H);
 		image_string = mlx_get_data_addr(image, bpp, sizeline, endian);
 		man.y = SCREEN_H / 2 * -1;
@@ -67,17 +69,19 @@ void					mandelbrot(t_mlx mlx, t_man man)
 			}
 			if (man.lp > 250)
 				man.lp = 0;
-			//mlx_pixel_put(mlx.mlx, mlx.win, man.x + SCREEN_W / 2, man.y + SCREEN_H / 2, man.lp);
-			image_string[x] = man.lp / 2;
+			image_string[x] = man.lp;
 			x += 4;
 			man.y++;
 		}
-		mlx_put_image_to_window(mlx.mlx, mlx.win, image, 100, 100);
-	//	free(image);
-	//	free(image_string);
+		mlx_put_image_to_window(mlx.mlx, mlx.win, image, man.x + SCREEN_W / 2 + man.thex, 0 + man.they);
+		free(image);
+		free(image_string);
 		man.x++;
 	}
-	//mlx_put_image_to_window(mlx.mlx, mlx.win, image, 0, 0);
+	free(bpp);
+	free(sizeline);
+	free(endian);
+	
 }
 
 void				set_mandelbrot(t_man *man)
@@ -85,7 +89,7 @@ void				set_mandelbrot(t_man *man)
 	man->cx = 0;
 	man->cy = 0;
 	man->scale = 0.003;
-	man->limit = 10000;
+	man->limit = 100;
 	man->lp = 0;
 	man->thex = 0;
 	man->they = 0;
