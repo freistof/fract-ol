@@ -19,8 +19,8 @@
 # include <unistd.h>
 # include <stdio.h> // remove
 
-# define SCREEN_W 1280
-# define SCREEN_H 800
+# define SCREEN_W 600
+# define SCREEN_H 600
 # define SCROLL_UP 5
 # define SCROLL_DOWN 4
 
@@ -64,7 +64,7 @@ int						mouse_press(int button, int x, int y, t_keeper *keeper);
 void					open_window(t_keeper *keeper);
 
 void					set_mandelbrot(t_man *man);
-void					mandelbrot(t_mlx mlx, t_man man);
+void					mandelbrot(t_mlx *mlx, t_man *man);
 
 t_mlx					julia(t_mlx mlx);
 
