@@ -28,6 +28,8 @@
 # define RIGHT			124
 # define DOWN			125
 # define UP				126
+# define PLUS			24
+# define MINUS			25
 
 typedef struct			s_mlx
 {
@@ -39,7 +41,7 @@ typedef struct 			s_man
 {
 	float				cx;
 	float				cy;
-	float				scale;
+	int					scale;
 	int					limit;
 	short				lp;
 	float				a1;
