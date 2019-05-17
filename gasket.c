@@ -12,4 +12,8 @@
 
 #include "fractol.h"
 
+/*void				sierpienski_gasket(t_mlx *mlx, t_sier *sier)
+{
 
+}
+*/

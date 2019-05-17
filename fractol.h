@@ -19,10 +19,15 @@
 # include <unistd.h>
 # include <stdio.h> // remove
 
-# define SCREEN_W 600
-# define SCREEN_H 600
-# define SCROLL_UP 5
-# define SCROLL_DOWN 4
+# define SCREEN_W		600
+# define SCREEN_H		600
+
+# define SCROLL_UP		5
+# define SCROLL_DOWN	4
+# define LEFT			123
+# define RIGHT			124
+# define DOWN			125
+# define UP				126
 
 typedef struct			s_mlx
 {
@@ -35,7 +40,7 @@ typedef struct 			s_man
 	float				cx;
 	float				cy;
 	float				scale;
-	short				limit;
+	int					limit;
 	short				lp;
 	float				a1;
 	float				a2;
@@ -43,10 +48,12 @@ typedef struct 			s_man
 	float				b2;
 	int					x;
 	int					y;
-	int					thex;
-	int					they;
+	float				thex;
+	float				they;
 	float				ax;
 	float				ay;
+	int					zoomx;
+	int					zoomy;
 }						t_man;
 
 
@@ -54,6 +61,8 @@ typedef struct 			s_keeper
 {
 	t_mlx				*mlx;
 	t_man				*man;
+	int					just_set_up;
+	int					just_set_down;
 }						t_keeper;
 
 int						deal_key(int key, t_keeper *keeper);

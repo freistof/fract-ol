@@ -20,7 +20,6 @@ void					mandelbrot(t_mlx *mlx, t_man *man)
 	int					*sizeline;
 	int					*endian;
 
-	
 	bpp = malloc(sizeof(int));
 	sizeline = malloc(sizeof(int));
 	endian = malloc(sizeof(int));
@@ -32,8 +31,8 @@ void					mandelbrot(t_mlx *mlx, t_man *man)
 		man->x = SCREEN_W / 2 * -1;
 		while (man->x < SCREEN_W / 2)
 		{
-			man->ax = man->cx + (man->x + man->thex) * man->scale;
-			man->ay = man->cy + (man->y + man->they) * man->scale;
+			man->ax = man->cx + (man->x + man->thex + man->zoomx) * man->scale;
+			man->ay = man->cy + (man->y + man->they + man->zoomy) * man->scale;
 			man->a1 = man->ax;
 			man->b1 = man->ay;
 			man->lp = 0;
@@ -65,10 +64,12 @@ void				set_mandelbrot(t_man *man)
 	man->cx = 0;
 	man->cy = 0;
 	man->scale = 0.005;
-	man->limit = 1000;
+	man->limit = 10000;
 	man->lp = 0;
 	man->thex = -100;
 	man->they = 0;
+	man->zoomx = 0;
+	man->zoomy = 0;
 	man->x = SCREEN_W / 2 * -1;
 	man->y = SCREEN_H / 2 * -1;
 }

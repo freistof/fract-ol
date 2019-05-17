@@ -37,6 +37,8 @@ void				choose_fractal(char *argument)
 	{
 		mlx = malloc(sizeof(t_mlx));
 		keeper->mlx = mlx;
+		keeper->just_set_up = 0;
+		keeper->just_set_down = 0;
 		mlx->mlx = mlx_init();
 		mlx->win = mlx_new_window(keeper->mlx->mlx, SCREEN_W, SCREEN_H, "fract'ol");
 	}
