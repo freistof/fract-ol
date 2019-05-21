@@ -31,6 +31,11 @@
 # define PLUS			24
 # define MINUS			25
 
+typedef struct			s_jul
+{
+
+}						t_jul;
+
 typedef struct			s_mlx
 {
 	void				*mlx;
@@ -56,6 +61,9 @@ typedef struct 			s_man
 	float				ay;
 	int					zoomx;
 	int					zoomy;
+	int					*bpp;
+	int					*sizeline;
+	int					*endian;
 }						t_man;
 
 
@@ -63,8 +71,7 @@ typedef struct 			s_keeper
 {
 	t_mlx				*mlx;
 	t_man				*man;
-	int					just_set_up;
-	int					just_set_down;
+	t_jul				*jul;
 }						t_keeper;
 
 int						deal_key(int key, t_keeper *keeper);
@@ -77,6 +84,7 @@ void					open_window(t_keeper *keeper);
 void					set_mandelbrot(t_man *man);
 void					mandelbrot(t_mlx *mlx, t_man *man);
 
-t_mlx					julia(t_mlx mlx);
+void					set_julia(t_jul *jul);
+void					julia(t_mlx *mlx, t_jul *jul);
 
 #endif

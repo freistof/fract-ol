@@ -17,7 +17,10 @@ void				open_window(t_keeper *keeper)
 	mlx_hook(keeper->mlx->win, 2, 2, deal_key, keeper);
 	mlx_hook(keeper->mlx->win, 17, 17, closing, NULL);
 	mlx_hook(keeper->mlx->win, 4, 4,  mouse_press, keeper);
-	mandelbrot(keeper->mlx, keeper->man);
+	if (keeper->man)
+		mandelbrot(keeper->mlx, keeper->man);
+	if (keeper->jul)
+		julia(keeper->mlx, keeper->jul);
 	mlx_loop(keeper->mlx->mlx);
 }
 
@@ -30,6 +33,7 @@ void				choose_fractal(char *argument)
 	t_keeper	*keeper = NULL;
 	t_mlx		*mlx = NULL;
 	t_man		*man = NULL;
+	t_jul		*jul = NULL;
 
 	if (!keeper)
 		keeper = malloc(sizeof(t_keeper));
@@ -37,16 +41,20 @@ void				choose_fractal(char *argument)
 	{
 		mlx = malloc(sizeof(t_mlx));
 		keeper->mlx = mlx;
-		keeper->just_set_up = 0;
-		keeper->just_set_down = 0;
 		mlx->mlx = mlx_init();
 		mlx->win = mlx_new_window(keeper->mlx->mlx, SCREEN_W, SCREEN_H, "fract'ol");
 	}
 	if (ft_strequ("-m", argument))
 	{
 		man = malloc(sizeof(t_man));
-		set_mandelbrot(man);
+		set_mandelbrot(man);		
 		keeper->man = man;
+	}
+	if (ft_strequ("-j", argument))
+	{
+		jul = malloc(sizeof(t_jul));
+		set_julia(jul);
+		keeper->jul = jul;
 	}
 	open_window(keeper);
 }
@@ -66,6 +74,9 @@ int				main(int argc, char **argv)
 		ft_putendl("-s for Sierpienski Gasket");
 		return (0);
 	}
-	choose_fractal(argv[1]);
+	if (!ft_strequ(argv[1], "-m") && !ft_strequ(argv[1], "-j") && !ft_strequ(argv[1], "-s"))
+		ft_putendl("not a valid fractal");
+	else
+		choose_fractal(argv[1]);
 	return (0);
 }

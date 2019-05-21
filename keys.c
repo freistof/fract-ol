@@ -30,8 +30,6 @@ int				deal_key(int key, t_keeper *keeper)
 		keeper->man->limit += 100;
 	if (key == MINUS)
 		keeper->man->limit -= 100;
-	keeper->just_set_up = 0;
-	keeper->just_set_down = 0;
 	mandelbrot(keeper->mlx, keeper->man);
 	return (0);
 }
@@ -45,8 +43,8 @@ int				closing(void *param)
 
 int				mouse_press(int button, int x, int y, t_keeper *keeper)
 {
-	keeper->man->thex += (x - SCREEN_W / 2) / 2;
-	keeper->man->they += (y - SCREEN_H / 2) / 2;
+	keeper->man->thex += (x - SCREEN_W / 2);
+	keeper->man->they += (y - SCREEN_H / 2);
 	if (button == SCROLL_UP && keeper->man->scale > 0)
 		keeper->man->scale *= 1.5;
 	if (button == SCROLL_DOWN)

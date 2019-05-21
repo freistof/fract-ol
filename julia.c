@@ -12,7 +12,12 @@
 
 #include "fractol.h"
 
-t_mlx				julia(t_mlx mlx)
+void				julia(t_mlx *mlx, t_jul *jul)
 {
-	return (mlx);
+	;
+}
+
+void				set_julia(t_jul *jul)
+{
+	;
 }
