@@ -50,7 +50,7 @@ void				choose_fractal(char *argument)
 	{
 		man = malloc(sizeof(t_man));
 		set_mandelbrot(man);		
-		//keeper->man = man;
+		keeper->man = man;
 	}
 	if (ft_strequ("-j", argument))
 	{

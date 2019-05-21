@@ -21,7 +21,7 @@ void					man_iterate(t_man *man)
 	man->b1 = man->b2;	
 }
 
-void					free_man(t_man *man, void *image, char *image_string)
+void					free_man(void *image, char *image_string)
 {
 	free(image);
 	free(image_string);
