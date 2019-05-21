@@ -19,8 +19,8 @@ void				open_window(t_keeper *keeper)
 	mlx_hook(keeper->mlx->win, 4, 4,  mouse_press, keeper);
 	if (keeper->man)
 		mandelbrot(keeper->mlx, keeper->man);
-	if (keeper->jul)
-		julia(keeper->mlx, keeper->jul);
+/*	else if (keeper->jul)
+		julia(keeper->mlx, keeper->jul);*/
 	mlx_loop(keeper->mlx->mlx);
 }
 
@@ -35,8 +35,9 @@ void				choose_fractal(char *argument)
 	t_man		*man = NULL;
 	t_jul		*jul = NULL;
 
-	if (!keeper)
-		keeper = malloc(sizeof(t_keeper));
+	keeper = malloc(sizeof(t_keeper));
+/*	keeper->man = man;
+	keeper->jul = jul;*/
 	if (!mlx)
 	{
 		mlx = malloc(sizeof(t_mlx));

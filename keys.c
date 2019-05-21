@@ -19,13 +19,13 @@ int				deal_key(int key, t_keeper *keeper)
 		exit(1);
 	mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
 	if (key == LEFT)
-		keeper->man->thex -= 10;
+		keeper->man->addx -= 10;
 	if (key == RIGHT)
-		keeper->man->thex += 10;
+		keeper->man->addx += 10;
 	if (key == UP)
-		keeper->man->they -= 10;
+		keeper->man->addy -= 10;
 	if (key == DOWN)
-		keeper->man->they += 10;
+		keeper->man->addy += 10;
 	if (key == PLUS)
 		keeper->man->limit += 100;
 	if (key == MINUS)
@@ -43,9 +43,9 @@ int				closing(void *param)
 
 int				mouse_press(int button, int x, int y, t_keeper *keeper)
 {
-	keeper->man->thex += (x - SCREEN_W / 2);
-	keeper->man->they += (y - SCREEN_H / 2);
-	if (button == SCROLL_UP && keeper->man->scale > 0)
+	keeper->man->addx += (x - SCREEN_W / 2);
+	keeper->man->addy += (y - SCREEN_H / 2);
+	if (button == SCROLL_UP)
 		keeper->man->scale *= 1.5;
 	if (button == SCROLL_DOWN)
 		keeper->man->scale /= 1.5;

@@ -33,7 +33,11 @@
 
 typedef struct			s_jul
 {
-
+	int					x;
+	int					y;
+	int					*bpp;
+	int					*sizeline;
+	int					*endian;
 }						t_jul;
 
 typedef struct			s_mlx
@@ -55,17 +59,14 @@ typedef struct 			s_man
 	float				b2;
 	int					x;
 	int					y;
-	float				thex;
-	float				they;
+	float				addx;
+	float				addy;
 	float				ax;
 	float				ay;
-	int					zoomx;
-	int					zoomy;
 	int					*bpp;
 	int					*sizeline;
 	int					*endian;
 }						t_man;
-
 
 typedef struct 			s_keeper
 {
