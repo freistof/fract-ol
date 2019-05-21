@@ -14,23 +14,25 @@
 
 int				deal_key(int key, t_keeper *keeper)
 {
-	printf("%i\n", key);
 	if (key == 53)
 		exit(1);
-	mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
-	if (key == LEFT)
-		keeper->man->addx -= 10;
-	if (key == RIGHT)
-		keeper->man->addx += 10;
-	if (key == UP)
-		keeper->man->addy -= 10;
-	if (key == DOWN)
-		keeper->man->addy += 10;
-	if (key == PLUS)
-		keeper->man->limit += 100;
-	if (key == MINUS)
-		keeper->man->limit -= 100;
-	mandelbrot(keeper->mlx, keeper->man);
+	if (keeper->man)
+	{
+		mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
+		if (key == LEFT)
+			keeper->man->addx -= 10;
+		if (key == RIGHT)
+			keeper->man->addx += 10;
+		if (key == UP)
+			keeper->man->addy -= 10;
+		if (key == DOWN)
+			keeper->man->addy += 10;
+		if (key == PLUS)
+			keeper->man->limit += 100;
+		if (key == MINUS)
+			keeper->man->limit -= 100;
+		mandelbrot(keeper->mlx, keeper->man);
+	}
 	return (0);
 }
 
@@ -41,15 +43,44 @@ int				closing(void *param)
 	return (0);
 }
 
+int				mouse_move(int x, int y, t_keeper *keeper)
+{
+	float fx = (float)x;
+	float fy = (float)y;
+	printf("x: %i\n", x);
+	printf("y: %i\n", y);
+	if (keeper->jul && x > 0 && x < SCREEN_W && y > 0 && y < SCREEN_H)
+	{
+		keeper->jul->const_r += (fx - SCREEN_W / 2) / 10000;
+		if (keeper->jul->const_r > 1)
+			keeper->jul->const_r -= 2;
+		else if (keeper->jul->const_r < -1)
+			keeper->jul->const_r += 2;
+		keeper->jul->const_i += (fy - SCREEN_H / 2) / 10000;
+		if (keeper->jul->const_i > 1)
+			keeper->jul->const_i -= 2;
+		if (keeper->jul->const_i < -1)
+			keeper->jul->const_i += 2;
+		printf("r: %f\n", keeper->jul->const_r);
+		printf("i: %f\n", keeper->jul->const_i);
+		mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
+		julia(keeper->mlx, keeper->jul);
+	}
+	return (0);
+}
+
 int				mouse_press(int button, int x, int y, t_keeper *keeper)
 {
-	keeper->man->addx += (x - SCREEN_W / 2);
-	keeper->man->addy += (y - SCREEN_H / 2);
-	if (button == SCROLL_UP)
-		keeper->man->scale *= 1.5;
-	if (button == SCROLL_DOWN)
-		keeper->man->scale /= 1.5;
-	mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
-	mandelbrot(keeper->mlx, keeper->man);
+	if (keeper->man)
+	{
+		keeper->man->addx += (x - SCREEN_W / 2);
+		keeper->man->addy += (y - SCREEN_H / 2);
+		if (button == SCROLL_UP)
+			keeper->man->scale *= 1.5;
+		if (button == SCROLL_DOWN)
+			keeper->man->scale /= 1.5;
+		mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
+		mandelbrot(keeper->mlx, keeper->man);
+	}
 	return (1);
 }

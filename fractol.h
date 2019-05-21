@@ -35,6 +35,9 @@ typedef struct			s_jul
 {
 	int					x;
 	int					y;
+	int					limit;
+	float				const_r;
+	float				const_i;
 	int					*bpp;
 	int					*sizeline;
 	int					*endian;
@@ -78,7 +81,7 @@ typedef struct 			s_keeper
 int						deal_key(int key, t_keeper *keeper);
 int						closing(void *param);
 int						mouse_press(int button, int x, int y, t_keeper *keeper);
-
+int						mouse_move(int x, int y, t_keeper *keeper);
 
 void					open_window(t_keeper *keeper);
 
