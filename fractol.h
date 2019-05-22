@@ -44,6 +44,7 @@ typedef struct			s_jul
 	int					click;
 	int					addx;
 	int					addy;
+	int					iter;
 	int					*bpp;
 	int					*sizeline;
 	int					*endian;

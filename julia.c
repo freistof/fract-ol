@@ -48,7 +48,7 @@ void				julia(t_mlx *mlx, t_jul *jul)
 			color = 0;
 			new_real = (jul->x + jul->addx) / (jul->zoom * SCREEN_W / 2);
 			new_imag = (jul->y + jul->addy) / (jul->zoom * SCREEN_H / 2);
-			while (color < 250 && new_real * new_real + new_imag * new_imag < jul->limit)
+			while (color < jul->iter && new_real * new_real + new_imag * new_imag < jul->limit)
 			{
 				old_real = new_real;
 				old_imag = new_imag;
@@ -56,12 +56,16 @@ void				julia(t_mlx *mlx, t_jul *jul)
 				new_imag = 2 * old_real * old_imag + jul->const_i;
 				color++;
 			}
-			if (color < 250)
+			if (color < jul->iter)
 			{
-				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = color * 2;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color * 4;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color * 3;
+				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = 100 * color;
+				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color;
+				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = color;
 			}
+/*			else
+			{
+				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = color;
+			}*/
 			jul->x++;
 		}
 		jul->y++;
@@ -78,6 +82,7 @@ void				set_julia(t_jul *jul)
 	jul->click = 1;
 	jul->addx = 0;
 	jul->addy = 0;
+	jul->iter = 100;
 	jul->bpp = malloc(sizeof(int));
 	jul->sizeline = malloc(sizeof(int));
 	jul->endian = malloc(sizeof(int));
