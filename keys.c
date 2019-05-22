@@ -47,16 +47,14 @@ int				mouse_move(int x, int y, t_keeper *keeper)
 {
 	float fx = (float)x;
 	float fy = (float)y;
-	printf("x: %i\n", x);
-	printf("y: %i\n", y);
 	if (keeper->jul && x > 0 && x < SCREEN_W && y > 0 && y < SCREEN_H)
 	{
-		keeper->jul->const_r += (fx - SCREEN_W / 2) / SCREEN_W / 10;
+		keeper->jul->const_r += (fy - SCREEN_W / 2) / SCREEN_W / 10;
 		if (keeper->jul->const_r > 1)
 			keeper->jul->const_r -= 2;
 		else if (keeper->jul->const_r < -1)
 			keeper->jul->const_r += 2;
-		keeper->jul->const_i += (fy - SCREEN_H / 2) / SCREEN_H / 10;
+		keeper->jul->const_i += (fx - SCREEN_H / 2) / SCREEN_H / 10;
 		if (keeper->jul->const_i > 1)
 			keeper->jul->const_i -= 2;
 		if (keeper->jul->const_i < -1)

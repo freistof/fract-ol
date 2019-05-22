@@ -49,7 +49,7 @@ void				julia(t_mlx *mlx, t_jul *jul)
 			color = 0;
 			new_real = jul->x / (zoom * SCREEN_W / 2); // ?
 			new_imag = jul->y / (zoom * SCREEN_H / 2); // ?
-			while (color < 200 && new_real * new_real + new_imag * new_imag < jul->limit)
+			while (color < 250 && new_real * new_real + new_imag * new_imag < jul->limit)
 			{
 				old_real = new_real;
 				old_imag = new_imag;
@@ -57,11 +57,11 @@ void				julia(t_mlx *mlx, t_jul *jul)
 				new_imag = 2 * old_real * old_imag + jul->const_i;
 				color++;
 			}
-			if (color < 200)
+			if (color < 250)
 			{
 				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = color * 2;
 				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color;
+				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color * 3;
 			}
 			jul->x++;
 		}
