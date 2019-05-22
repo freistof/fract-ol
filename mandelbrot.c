@@ -28,15 +28,12 @@ void					free_man(void *image, char *image_string)
 /*	free(man->bpp);
 	free(man->sizeline);
 	free(man->endian);*/
-}
+} 
 
 void					make_start_points(t_man *man)
 {
 	man->ax = man->cx + (man->x + man->addx) / man->scale;
 	man->ay = man->cy + (man->y + man->addy) / man->scale;
-//	printf("ax: %f\nay: %f\n", man->ax, man->ay);
-/*	man->ax = 0.5;
-	man->ay = -0.5;*/
 	man->a1 = man->ax;
 	man->b1 = man->ay;
 	man->lp = 0;
@@ -56,14 +53,20 @@ void					mandelbrot(t_mlx *mlx, t_man *man)
 		while (man->x < SCREEN_W / 2)
 		{
 			make_start_points(man);
-			while (man->lp <= 100 && man->a1 * man->a1 + man->b1 * man->b1 <= man->limit)
+			while (man->lp <= man->iter && man->a1 * man->a1 + man->b1 * man->b1 <= man->limit)
 				man_iterate(man);
-			if (man->lp < 100)
+			if (man->lp < man->iter)
 			{
-				image_string[(SCREEN_W * (man->y + SCREEN_H / 2) + (man->x + SCREEN_W / 2)) * 4] = man->lp * 2;
-				image_string[((SCREEN_W * (man->y + SCREEN_H / 2) + (man->x + SCREEN_W / 2)) * 4) + 1] = man->lp * 5;
+				image_string[(SCREEN_W * (man->y + SCREEN_H / 2) + (man->x + SCREEN_W / 2)) * 4] = man->lp;
+				image_string[((SCREEN_W * (man->y + SCREEN_H / 2) + (man->x + SCREEN_W / 2)) * 4) + 1] = man->lp;
 				image_string[((SCREEN_W * (man->y + SCREEN_H / 2) + (man->x + SCREEN_W / 2)) * 4) + 1] = man->lp;
 			}
+/*			else
+			{
+				image_string[(SCREEN_W * (man->y + SCREEN_H / 2) + (man->x + SCREEN_W / 2)) * 4] = 255 / 2;
+				image_string[((SCREEN_W * (man->y + SCREEN_H / 2) + (man->x + SCREEN_W / 2)) * 4) + 1] = 125 / 2;
+				image_string[((SCREEN_W * (man->y + SCREEN_H / 2) + (man->x + SCREEN_W / 2)) * 4) + 1] = 206 / 2;
+			}*/
 			man->x++;
 		}
 		man->y++;
@@ -81,6 +84,7 @@ void				set_mandelbrot(t_man *man)
 	man->lp = 0;
 	man->addx = -100;
 	man->addy = 0;
+	man->iter = 100;
 	man->x = SCREEN_W / 2 * -1;
 	man->y = SCREEN_H / 2 * -1;
 	man->bpp = malloc(sizeof(int));

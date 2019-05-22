@@ -38,13 +38,13 @@ typedef struct			s_jul
 	int					x;
 	int					y;
 	int					limit;
-	float				const_r;
-	float				const_i;
-	float				zoom;
+	long double			const_r;
+	long double			const_i;
+	long double			zoom;
 	int					click;
-	int					addx;
-	int					addy;
-	int					iter;
+	long double			addx;
+	long double			addy;
+	long long			iter;
 	int					*bpp;
 	int					*sizeline;
 	int					*endian;
@@ -69,6 +69,7 @@ typedef struct 			s_man
 	float				b2;
 	int					x;
 	int					y;
+	int					iter;
 	float				addx;
 	float				addy;
 	float				ax;

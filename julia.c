@@ -58,27 +58,33 @@ void				julia(t_mlx *mlx, t_jul *jul)
 			}
 			if (color < jul->iter)
 			{
-				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = 100 * color;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = color;
+				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = color / 2;
+				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = color / 2;
+				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color / 2;
 			}
-/*			else
+			else
 			{
-				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = color;
-			}*/
+				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = 255 / 2;
+				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = 125 / 2;
+				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = 206 / 2;
+			}
 			jul->x++;
 		}
 		jul->y++;
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->win, image, 0, 0);
+	mlx_string_put(mlx->mlx, mlx->win, 10, 10, 0xFFFFFF, "zoom");
+	mlx_string_put(mlx->mlx, mlx->win, 70, 10, 0xFFFFFF, ft_itoa(jul->zoom));
+	mlx_string_put(mlx->mlx, mlx->win, 10, 25, 0xFFFFFF, "iter");
+	mlx_string_put(mlx->mlx, mlx->win, 70, 25, 0xFFFFFF, ft_itoa(jul->iter));
 }
 
 void				set_julia(t_jul *jul)
 {
-	jul->limit = 4;
+	jul->limit = 1000;
 	jul->const_r = -0.835;
 	jul->const_i = -0.2321; //0.27015;
-	jul->zoom = 1;
+	jul->zoom = 0.5;
 	jul->click = 1;
 	jul->addx = 0;
 	jul->addy = 0;
