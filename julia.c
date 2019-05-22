@@ -20,8 +20,8 @@
 /*
 ** newRe = 1.5 * (x - w / 2) / (0.5 * zoom * w) + moveX;
 ** newIm = (y - h / 2) / (0.5 * zoom * h) + moveY;
-**  cRe = -0.7;
-  cIm = 0.27015;
+** cRe = -0.7;
+** cIm = 0.27015;
 */
 
 void				julia(t_mlx *mlx, t_jul *jul)
@@ -32,7 +32,6 @@ void				julia(t_mlx *mlx, t_jul *jul)
 	int				color;
 //	float			const_r = -0.7; // must be defined by mouse movements
 //	float			const_i = 0.27015; // must be defined by mouse movements
-	float			zoom = 1;
 	float			new_real;
 	float			new_imag;
 	float			old_real;
@@ -47,8 +46,8 @@ void				julia(t_mlx *mlx, t_jul *jul)
 		while (jul->x < SCREEN_W / 2)
 		{
 			color = 0;
-			new_real = jul->x / (zoom * SCREEN_W / 2); // ?
-			new_imag = jul->y / (zoom * SCREEN_H / 2); // ?
+			new_real = (jul->x + jul->addx) / (jul->zoom * SCREEN_W / 2);
+			new_imag = (jul->y + jul->addy) / (jul->zoom * SCREEN_H / 2);
 			while (color < 250 && new_real * new_real + new_imag * new_imag < jul->limit)
 			{
 				old_real = new_real;
@@ -60,7 +59,7 @@ void				julia(t_mlx *mlx, t_jul *jul)
 			if (color < 250)
 			{
 				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = color * 2;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color;
+				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color * 4;
 				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color * 3;
 			}
 			jul->x++;
@@ -75,6 +74,10 @@ void				set_julia(t_jul *jul)
 	jul->limit = 4;
 	jul->const_r = -0.835;
 	jul->const_i = -0.2321; //0.27015;
+	jul->zoom = 1;
+	jul->click = 1;
+	jul->addx = 0;
+	jul->addy = 0;
 	jul->bpp = malloc(sizeof(int));
 	jul->sizeline = malloc(sizeof(int));
 	jul->endian = malloc(sizeof(int));

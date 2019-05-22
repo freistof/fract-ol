@@ -47,14 +47,14 @@ int				mouse_move(int x, int y, t_keeper *keeper)
 {
 	float fx = (float)x;
 	float fy = (float)y;
-	if (keeper->jul && x > 0 && x < SCREEN_W && y > 0 && y < SCREEN_H)
+	if (keeper->jul && x > 0 && x < SCREEN_W && y > 0 && y < SCREEN_H && keeper->jul->click)
 	{
-		keeper->jul->const_r += (fy - SCREEN_W / 2) / SCREEN_W / 10;
+		keeper->jul->const_r = (fy/* - SCREEN_W / 2*/) / SCREEN_W + 1;
 		if (keeper->jul->const_r > 1)
 			keeper->jul->const_r -= 2;
 		else if (keeper->jul->const_r < -1)
 			keeper->jul->const_r += 2;
-		keeper->jul->const_i += (fx - SCREEN_H / 2) / SCREEN_H / 10;
+		keeper->jul->const_i = (fx/* - SCREEN_H / 2*/) / SCREEN_H + 1;
 		if (keeper->jul->const_i > 1)
 			keeper->jul->const_i -= 2;
 		if (keeper->jul->const_i < -1)
@@ -69,16 +69,40 @@ int				mouse_move(int x, int y, t_keeper *keeper)
 
 int				mouse_press(int button, int x, int y, t_keeper *keeper)
 {
+	printf("%i\n", button);
 	if (keeper->man)
 	{
-		keeper->man->addx += (x - SCREEN_W / 2);
-		keeper->man->addy += (y - SCREEN_H / 2);
+		if (button == SCROLL_UP || button == SCROLL_DOWN)
+		{
+			keeper->man->addx += (x - SCREEN_W / 2);
+			keeper->man->addy += (y - SCREEN_H / 2);
+		}
 		if (button == SCROLL_UP)
 			keeper->man->scale *= 1.5;
 		if (button == SCROLL_DOWN)
 			keeper->man->scale /= 1.5;
 		mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
 		mandelbrot(keeper->mlx, keeper->man);
+	}
+	if (keeper->jul)
+	{
+		if (button == SCROLL_UP || button == SCROLL_DOWN)
+		{
+			keeper->jul->addx += (x - SCREEN_W / 2) * keeper->jul->zoom;
+			keeper->jul->addy += (y - SCREEN_H / 2) * keeper->jul->zoom;
+		}
+		if (button == LEFT_CLICK)
+		{
+			if (keeper->jul->click == 1)
+				keeper->jul->click = 0;
+			else keeper->jul->click = 1;
+		}
+		if (button == SCROLL_UP)
+			keeper->jul->zoom *= 1.5;
+		if (button == SCROLL_DOWN)
+			keeper->jul->zoom /= 1.5;
+		mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
+		julia(keeper->mlx, keeper->jul);		
 	}
 	return (1);
 }

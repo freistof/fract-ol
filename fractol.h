@@ -24,6 +24,8 @@
 
 # define SCROLL_UP		5
 # define SCROLL_DOWN	4
+# define LEFT_CLICK		1
+
 # define LEFT			123
 # define RIGHT			124
 # define DOWN			125
@@ -38,6 +40,10 @@ typedef struct			s_jul
 	int					limit;
 	float				const_r;
 	float				const_i;
+	float				zoom;
+	int					click;
+	int					addx;
+	int					addy;
 	int					*bpp;
 	int					*sizeline;
 	int					*endian;
