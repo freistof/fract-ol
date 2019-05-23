@@ -32,73 +32,47 @@
 # define UP				126
 # define PLUS			24
 # define MINUS			25
-# define D				2
+# define ZERO			29
 
-typedef struct			s_jul
+typedef struct 			s_fractal
 {
+	int					i;
 	int					x;
 	int					y;
-	int					limit;
-	long double			const_r;
-	long double			const_i;
-	long double			zoom;
-	int					click;
-	int					depth;
 	long double			addx;
 	long double			addy;
-	long long			iter;
+	int					limit;
+	int					iterations;
+	long double			new_real;
+	long double			new_imag;
+	long double			old_real;
+	long double			old_imag;
+	long double			const_r;
+	long double			const_i;
+	long double			manx;
+	long double			many;
+	float				zoom;
+	int					click;
+	int					depth;
 	int					*bpp;
 	int					*sizeline;
 	int					*endian;
-}						t_jul;
-
-typedef struct			s_mlx
-{
+	void				*image;
+	char				*image_string;
 	void				*mlx;
 	void				*win;
-}						t_mlx;
+	char				type;
+}						t_fractal;
 
-typedef struct 			s_man
-{
-	float				cx;
-	float				cy;
-	int					scale;
-	int					limit;
-	short				lp;
-	float				a1;
-	float				a2;
-	float				b1;
-	float				b2;
-	int					x;
-	int					y;
-	int					iter;
-	float				addx;
-	float				addy;
-	float				ax;
-	float				ay;
-	int					*bpp;
-	int					*sizeline;
-	int					*endian;
-}						t_man;
-
-typedef struct 			s_keeper
-{
-	t_mlx				*mlx;
-	t_man				*man;
-	t_jul				*jul;
-}						t_keeper;
-
-int						deal_key(int key, t_keeper *keeper);
+int						deal_key(int key, t_fractal *f);
 int						closing(void *param);
-int						mouse_press(int button, int x, int y, t_keeper *keeper);
-int						mouse_move(int x, int y, t_keeper *keeper);
+int						mouse_press(int button, int x, int y, t_fractal *f);
+int						mouse_move(int x, int y, t_fractal *f);
 
-void					open_window(t_keeper *keeper);
+void					set_fractal(t_fractal *f, char argument);
 
-void					set_mandelbrot(t_man *man);
-void					mandelbrot(t_mlx *mlx, t_man *man);
-
-void					set_julia(t_jul *jul);
-void					julia(t_mlx *mlx, t_jul *jul);
+void					julia(t_fractal *f);
+void					mandelbrot(t_fractal *f);
+void					burning_ship(t_fractal *f);
 
 #endif

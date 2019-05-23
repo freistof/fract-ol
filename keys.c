@@ -12,47 +12,37 @@
 
 #include "fractol.h"
 
-int				deal_key(int key, t_keeper *keeper)
+void			choose(t_fractal *f)
+{
+	if (f->type == 'j')
+		julia(f);
+	if (f->type == 'm')
+		mandelbrot(f);
+	if (f->type == 'b')
+		burning_ship(f);
+}
+
+int				deal_key(int key, t_fractal *f)
 {
 	printf("key: %i\n", key);
 	if (key == 53)
 		exit(1);
-	if (keeper->man)
-	{
-		mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
-		if (key == LEFT)
-			keeper->man->addx -= 10;
-		if (key == RIGHT)
-			keeper->man->addx += 10;
-		if (key == UP)
-			keeper->man->addy -= 10;
-		if (key == DOWN)
-			keeper->man->addy += 10;
-		if (key == PLUS)
-			keeper->man->iter += 100;
-		if (key == MINUS)
-			keeper->man->iter -= 100;
-/*		if (key == D)
-			switch(keeper->man->depth);*/
-		mandelbrot(keeper->mlx, keeper->man);
-	}
-	if (keeper->jul)
-	{
-		mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
-		if (key == LEFT)
-			keeper->jul->addx -= keeper->jul->zoom;
-		if (key == RIGHT)
-			keeper->jul->addx += keeper->jul->zoom;
-		if (key == UP)
-			keeper->jul->addy -= keeper->jul->zoom;
-		if (key == DOWN)
-			keeper->jul->addy += keeper->jul->zoom;
-		if (key == PLUS)
-			keeper->jul->iter += 100;
-		if (key == MINUS)
-			keeper->jul->iter -= 100;
-		julia(keeper->mlx, keeper->jul);
-	}
+	mlx_clear_window(f->mlx, f->win);
+	if (key == LEFT)
+		f->addx += 10;
+	if (key == RIGHT)
+		f->addx -= 10;
+	if (key == UP)
+		f->addy += 10;
+	if (key == DOWN)
+		f->addy -= 10;
+	if (key == PLUS && f->iterations < 500)
+		f->iterations += 100;
+	if (key == MINUS && f->iterations > 100)
+		f->iterations -= 100;
+	if (key == ZERO)
+		set_fractal(f, f->type);
+	choose(f);
 	return (0);
 }
 
@@ -63,63 +53,45 @@ int				closing(void *param)
 	return (0);
 }
 
-int				mouse_move(int x, int y, t_keeper *keeper)
+
+int				mouse_move(int x, int y, t_fractal *f)
 {
-	float fx = (float)x;
-	float fy = (float)y;
-	if (keeper->jul && x > 0 && x < SCREEN_W && y > 0 && y < SCREEN_H && keeper->jul->click)
+	if (x > 0 && x < SCREEN_W && y > 0 && y < SCREEN_H && f->click)
 	{
-		keeper->jul->const_r = 0.95 * fy / SCREEN_W + 1.1;
-		if (keeper->jul->const_r > 1)
-			keeper->jul->const_r -= 2;
-		else if (keeper->jul->const_r < -1)
-			keeper->jul->const_r += 2;
-		keeper->jul->const_i = 0.95 * fx / SCREEN_H + 1.8;
-		if (keeper->jul->const_i > 1)
-			keeper->jul->const_i -= 2;
-		if (keeper->jul->const_i < -1)
-			keeper->jul->const_i += 2;
-		mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
-		julia(keeper->mlx, keeper->jul);
+		f->const_r = 0.95 * y / SCREEN_W + 1.1;
+		if (f->const_r > 1)
+			f->const_r -= 2;
+		else if (f->const_r < -1)
+			f->const_r += 2;
+		f->const_i = 0.95 * x / SCREEN_H + 1.8;
+		if (f->const_i > 1)
+			f->const_i -= 2;
+		else if (f->const_i < -1)
+			f->const_i += 2;
+		mlx_clear_window(f->mlx, f->win);
+		julia(f);
 	}
 	return (0);
 }
 
-int				mouse_press(int button, int x, int y, t_keeper *keeper)
+int				mouse_press(int button, int x, int y, t_fractal *f)
 {
-	if (keeper->man)
+	if (button == LEFT_CLICK)
 	{
-		if (button == SCROLL_UP || button == SCROLL_DOWN)
-		{
-			keeper->man->addx += (x - SCREEN_W / 2) * 2;
-			keeper->man->addy += (y - SCREEN_H / 2) * 2;
-		}
-		if (button == SCROLL_UP)
-			keeper->man->scale *= 1.5;
-		if (button == SCROLL_DOWN)
-			keeper->man->scale /= 1.5;
-		mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
-		mandelbrot(keeper->mlx, keeper->man);
+		if (f->click == 1)
+			f->click = 0;
+		else f->click = 1;
 	}
-	if (keeper->jul)
+	if (button == SCROLL_UP)
 	{
-		if (button == SCROLL_UP)
-		{
-			keeper->jul->addx = (x - SCREEN_W / 2);
-			keeper->jul->addy = (y - SCREEN_H / 2);
-		}
-		if (button == LEFT_CLICK)
-		{
-			if (keeper->jul->click == 1)
-				keeper->jul->click = 0;
-			else keeper->jul->click = 1;
-		}
-		if (button == SCROLL_UP)
-			keeper->jul->zoom *= 1.5;
-		if (button == SCROLL_DOWN)
-			keeper->jul->zoom /= 1.5;
-		mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
-		julia(keeper->mlx, keeper->jul);		
+		f->addx += (x - SCREEN_W / 2);
+		f->addy += (y - SCREEN_H / 2);
 	}
-	return (1);
+	if (button == SCROLL_UP)
+		f->zoom *= 1.5;
+	if (button == SCROLL_DOWN)
+		f->zoom /= 1.5;
+	mlx_clear_window(f->mlx, f->win);
+	choose(f);	
+	return (0);
 }

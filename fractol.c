@@ -12,58 +12,60 @@
 
 #include "fractol.h"
 
+void				set_fractal(t_fractal *f, char argument)
+{
+	f->limit = 1000;
+	f->const_r = -0.835;
+	f->const_i = 0.2321;// 0.27015;
+	f->zoom = 0.5;
+	f->click = 1;
+	f->addx = 0;
+	f->addy = 0;
+	f->iterations = 100;
+	f->bpp = malloc(sizeof(int));
+	f->sizeline = malloc(sizeof(int));
+	f->endian = malloc(sizeof(int));
+	f->image = mlx_new_image(f->mlx, SCREEN_W, SCREEN_H);
+	f->image_string = mlx_get_data_addr(f->image, f->bpp, f->sizeline, f->endian);
+	f->type = argument;
+}
+
 /*
 ** sets key and mouse hooks and starts the loop
 */
 
-void				open_window(t_keeper *keeper)
+void				open_window(t_fractal *f, char argument)
 {
-	mlx_hook(keeper->mlx->win, 2, 2, deal_key, keeper);
-	mlx_hook(keeper->mlx->win, 17, 17, closing, NULL);
-	mlx_hook(keeper->mlx->win, 4, 4,  mouse_press, keeper);
-	mlx_hook(keeper->mlx->win, 6, 6, mouse_move, keeper);
-	if (keeper->man)
-		mandelbrot(keeper->mlx, keeper->man);
-	else if (keeper->jul)
-		julia(keeper->mlx, keeper->jul);
-	mlx_loop(keeper->mlx->mlx);
+	mlx_hook(f->win, 2, 2, deal_key, f);
+	mlx_hook(f->win, 17, 17, closing, NULL);
+	mlx_hook(f->win, 4, 4,  mouse_press, f);
+	if (argument == 'j')
+	{
+		mlx_hook(f->win, 6, 6, mouse_move, f);
+		julia(f);
+	}
+	if (argument == 'm')
+		mandelbrot(f);
+	if (argument == 'b')
+		burning_ship(f);
+	mlx_loop(f->mlx);
 }
+
 
 /*
 ** sets one struct for mandelbrot or julia
 ** another for burning ship
 */
 
-void				choose_fractal(char *argument)
+void				choose_fractal(char argument)
 {
-	t_keeper	*keeper = NULL;
-	t_mlx		*mlx = NULL;
-	t_man		*man = NULL;
-	t_jul		*jul = NULL;
+	t_fractal *f;
 
-	keeper = malloc(sizeof(t_keeper));
-	keeper->man = man;
-	keeper->jul = jul;
-	if (!mlx)
-	{
-		mlx = malloc(sizeof(t_mlx));
-		keeper->mlx = mlx;
-		mlx->mlx = mlx_init();
-		mlx->win = mlx_new_window(keeper->mlx->mlx, SCREEN_W, SCREEN_H, "fract'ol");
-	}
-	if (ft_strequ("-m", argument))
-	{
-		man = malloc(sizeof(t_man));
-		set_mandelbrot(man);		
-		keeper->man = man;
-	}
-	if (ft_strequ("-j", argument))
-	{
-		jul = malloc(sizeof(t_jul));
-		set_julia(jul);
-		keeper->jul = jul;
-	}
-	open_window(keeper);
+	f = malloc(sizeof(t_fractal));
+	f->mlx = mlx_init();
+	f->win = mlx_new_window(f->mlx, SCREEN_W, SCREEN_H, "fract'ol");
+	set_fractal(f, argument);
+	open_window(f, argument);
 }
 
 /*
@@ -84,6 +86,6 @@ int				main(int argc, char **argv)
 	if (!ft_strequ(argv[1], "-m") && !ft_strequ(argv[1], "-j") && !ft_strequ(argv[1], "-b"))
 		ft_putendl("not a valid fractal");
 	else
-		choose_fractal(argv[1]);
+		choose_fractal(argv[1][1]);
 	return (0);
 }
