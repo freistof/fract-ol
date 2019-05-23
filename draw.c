@@ -25,15 +25,6 @@ static void			put_to_screen(t_fractal *f)
 	mlx_string_put(f->mlx, f->win, 70, 25, 0xFFFFFF, ft_itoa(f->iterations));	
 }
 
-/*
-** sets the color of the image
-*/
-
-static void			set_image(t_fractal *f, int i)
-{
-	f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = i * 5;
-}
-
 static long double	absolute_ld(long double x)
 {
 	if (x < 0)
@@ -72,7 +63,7 @@ void				julia(t_fractal *f)
 			while (f->i < f->iterations && f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
 				iterate(f, f->const_r, f->const_i);
 			if (f->i < f->iterations)
-				set_image(f, f->i);
+				f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = f->i * 5;
 			else
 				f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = 0;
 			f->x++;
@@ -98,7 +89,7 @@ void				mandelbrot(t_fractal *f)
 			while (f->i < f->iterations && f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
 				iterate(f, f->manx, f->many);
 			if (f->i < f->iterations)
-				set_image(f, f->i);
+				f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = f->i * 5;
 			else
 				f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = 0;
 			f->x++;
@@ -125,12 +116,14 @@ void				burning_ship(t_fractal *f)
 			{
 				f->old_real = f->new_real;
 				f->old_imag = f->new_imag;
-				f->new_real = absolute_ld(f->old_real * f->old_real - f->old_imag * f->old_imag + f->manx);
-				f->new_imag = absolute_ld(2 * f->old_real * f->old_imag + f->many);
+				f->new_real = (long double)absolute_ld(f->old_real * f->old_real - f->old_imag * f->old_imag + f->manx);
+				f->new_imag = (long double)absolute_ld(2 * f->old_real * f->old_imag + f->many);
 				f->i++;
 			}
 			if (f->i < f->iterations)
-				set_image(f, f->i);
+				f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = f->i * 5;
+			else
+				f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = 0;
 			f->x++;
 		}
 		f->y++;
