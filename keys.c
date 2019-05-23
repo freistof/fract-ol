@@ -40,13 +40,13 @@ int				deal_key(int key, t_keeper *keeper)
 	{
 		mlx_clear_window(keeper->mlx->mlx, keeper->mlx->win);
 		if (key == LEFT)
-			keeper->jul->addx -= 10;
+			keeper->jul->addx -= keeper->jul->zoom;
 		if (key == RIGHT)
-			keeper->jul->addx += 10;
+			keeper->jul->addx += keeper->jul->zoom;
 		if (key == UP)
-			keeper->jul->addy -= 10;
+			keeper->jul->addy -= keeper->jul->zoom;
 		if (key == DOWN)
-			keeper->jul->addy += 10;
+			keeper->jul->addy += keeper->jul->zoom;
 		if (key == PLUS)
 			keeper->jul->iter += 100;
 		if (key == MINUS)
@@ -69,12 +69,12 @@ int				mouse_move(int x, int y, t_keeper *keeper)
 	float fy = (float)y;
 	if (keeper->jul && x > 0 && x < SCREEN_W && y > 0 && y < SCREEN_H && keeper->jul->click)
 	{
-		keeper->jul->const_r = 0.95 * (fy/* - SCREEN_W / 2*/) / SCREEN_W + 1;
+		keeper->jul->const_r = 0.95 * fy / SCREEN_W + 1.1;
 		if (keeper->jul->const_r > 1)
 			keeper->jul->const_r -= 2;
 		else if (keeper->jul->const_r < -1)
 			keeper->jul->const_r += 2;
-		keeper->jul->const_i = 0.95 * (fx/* - SCREEN_H / 2*/) / SCREEN_H + 1;
+		keeper->jul->const_i = 0.95 * fx / SCREEN_H + 1.8;
 		if (keeper->jul->const_i > 1)
 			keeper->jul->const_i -= 2;
 		if (keeper->jul->const_i < -1)

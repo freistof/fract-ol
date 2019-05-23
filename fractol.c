@@ -12,6 +12,10 @@
 
 #include "fractol.h"
 
+/*
+** sets key and mouse hooks and starts the loop
+*/
+
 void				open_window(t_keeper *keeper)
 {
 	mlx_hook(keeper->mlx->win, 2, 2, deal_key, keeper);
@@ -26,7 +30,8 @@ void				open_window(t_keeper *keeper)
 }
 
 /*
-**
+** sets one struct for mandelbrot or julia
+** another for burning ship
 */
 
 void				choose_fractal(char *argument)
@@ -68,15 +73,15 @@ void				choose_fractal(char *argument)
 
 int				main(int argc, char **argv)
 {
-	if (argc < 2)
+	if (argc != 2)
 	{
 		ft_putendl("Usage: ./fractol [fractol]");
 		ft_putendl("-m for Mandelbrot");
 		ft_putendl("-j for Julia");
-		ft_putendl("-s for Sierpienski Gasket");
+		ft_putendl("-b for Burning Ship");
 		return (0);
 	}
-	if (!ft_strequ(argv[1], "-m") && !ft_strequ(argv[1], "-j") && !ft_strequ(argv[1], "-s"))
+	if (!ft_strequ(argv[1], "-m") && !ft_strequ(argv[1], "-j") && !ft_strequ(argv[1], "-b"))
 		ft_putendl("not a valid fractal");
 	else
 		choose_fractal(argv[1]);

@@ -31,21 +31,13 @@ void		put_to_screen(void *image, t_mlx *mlx, t_jul *jul)
 
 void		set_image(char *image_string, t_jul *jul, int i)
 {
-	image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = i;
-	image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = i;
-	image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = i;
+	image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = i * 10;
+/*	image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = i * 10;
+	image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = i * 10;*/
 }
 
 /*
-** znew = zold² + c
-** c determines the shape the julia set takes on
-*/
-
-/*
-** newRe = 1.5 * (x - w / 2) / (0.5 * zoom * w) + moveX;
-** newIm = (y - h / 2) / (0.5 * zoom * h) + moveY;
-** cRe = -0.7;
-** cIm = 0.27015;
+** iterates over julia / mandelbrot
 */
 
 void				julia(t_mlx *mlx, t_jul *jul)
@@ -73,7 +65,7 @@ void				julia(t_mlx *mlx, t_jul *jul)
 			{
 				old_real = new_real;
 				old_imag = new_imag;
-				new_real = old_real * old_real - old_imag * old_imag + jul->const_r;
+				new_real = /*1.5 * */old_real * old_real - old_imag * old_imag + jul->const_r;
 				new_imag = 2 * old_real * old_imag + jul->const_i;
 				i++;
 			}
@@ -85,6 +77,10 @@ void				julia(t_mlx *mlx, t_jul *jul)
 	}
 	put_to_screen(image, mlx, jul);
 }
+
+/*
+** set base values for the first time
+*/
 
 void				set_julia(t_jul *jul)
 {
