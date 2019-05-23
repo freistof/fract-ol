@@ -14,6 +14,7 @@
 
 int				deal_key(int key, t_keeper *keeper)
 {
+	printf("key: %i\n", key);
 	if (key == 53)
 		exit(1);
 	if (keeper->man)
@@ -31,6 +32,8 @@ int				deal_key(int key, t_keeper *keeper)
 			keeper->man->iter += 100;
 		if (key == MINUS)
 			keeper->man->iter -= 100;
+/*		if (key == D)
+			switch(keeper->man->depth);*/
 		mandelbrot(keeper->mlx, keeper->man);
 	}
 	if (keeper->jul)
@@ -48,6 +51,8 @@ int				deal_key(int key, t_keeper *keeper)
 			keeper->jul->iter += 100;
 		if (key == MINUS)
 			keeper->jul->iter -= 100;
+		if (key == D)
+			switch(keeper->jul->depth);
 		julia(keeper->mlx, keeper->jul);
 	}
 	return (0);

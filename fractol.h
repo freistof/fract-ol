@@ -32,6 +32,7 @@
 # define UP				126
 # define PLUS			24
 # define MINUS			25
+# define D				2
 
 typedef struct			s_jul
 {
@@ -42,6 +43,7 @@ typedef struct			s_jul
 	long double			const_i;
 	long double			zoom;
 	int					click;
+	int					depth;
 	long double			addx;
 	long double			addy;
 	long long			iter;

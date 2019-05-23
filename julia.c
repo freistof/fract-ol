@@ -32,10 +32,10 @@ void				julia(t_mlx *mlx, t_jul *jul)
 	int				color;
 //	float			const_r = -0.7; // must be defined by mouse movements
 //	float			const_i = 0.27015; // must be defined by mouse movements
-	float			new_real;
-	float			new_imag;
-	float			old_real;
-	float			old_imag;
+	long double		new_real;
+	long double		new_imag;
+	long double		old_real;
+	long double		old_imag;
 
 	image = mlx_new_image(mlx->mlx, SCREEN_W, SCREEN_H);
 	image_string = mlx_get_data_addr(image, jul->bpp, jul->sizeline, jul->endian);
@@ -58,14 +58,14 @@ void				julia(t_mlx *mlx, t_jul *jul)
 			}
 			if (color < jul->iter)
 			{
-				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = color / 2;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = color / 2;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color / 2;
+				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = color * 50;
+				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = color * 50;
+				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color * 50;
 			}
 			else
 			{
 				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = 255 / 2;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = 125 / 2;
+				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = 206 / 2;
 				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = 206 / 2;
 			}
 			jul->x++;
