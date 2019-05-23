@@ -13,6 +13,30 @@
 #include "fractol.h"
 
 /*
+** puts image and text to screen
+*/
+
+void		put_to_screen(void *image, t_mlx *mlx, t_jul *jul)
+{
+	mlx_put_image_to_window(mlx->mlx, mlx->win, image, 0, 0);
+	mlx_string_put(mlx->mlx, mlx->win, 10, 10, 0xFFFFFF, "zoom");
+	mlx_string_put(mlx->mlx, mlx->win, 70, 10, 0xFFFFFF, ft_itoa(jul->zoom));
+	mlx_string_put(mlx->mlx, mlx->win, 10, 25, 0xFFFFFF, "iter");
+	mlx_string_put(mlx->mlx, mlx->win, 70, 25, 0xFFFFFF, ft_itoa(jul->iter));	
+}
+
+/*
+** sets the color of the image
+*/
+
+void		set_image(char *image_string, t_jul *jul, int i)
+{
+	image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = i;
+	image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = i;
+	image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = i;
+}
+
+/*
 ** znew = zold² + c
 ** c determines the shape the julia set takes on
 */
@@ -28,10 +52,7 @@ void				julia(t_mlx *mlx, t_jul *jul)
 {
 	void			*image;
 	char			*image_string;
-
-	int				color;
-//	float			const_r = -0.7; // must be defined by mouse movements
-//	float			const_i = 0.27015; // must be defined by mouse movements
+	int				i;
 	long double		new_real;
 	long double		new_imag;
 	long double		old_real;
@@ -45,38 +66,24 @@ void				julia(t_mlx *mlx, t_jul *jul)
 		jul->x = SCREEN_W / 2 * -1;
 		while (jul->x < SCREEN_W / 2)
 		{
-			color = 0;
+			i = 0;
 			new_real = (jul->x + jul->addx) / (jul->zoom * SCREEN_W / 2);
 			new_imag = (jul->y + jul->addy) / (jul->zoom * SCREEN_H / 2);
-			while (color < jul->iter && new_real * new_real + new_imag * new_imag < jul->limit)
+			while (i < jul->iter && new_real * new_real + new_imag * new_imag < jul->limit)
 			{
 				old_real = new_real;
 				old_imag = new_imag;
 				new_real = old_real * old_real - old_imag * old_imag + jul->const_r;
 				new_imag = 2 * old_real * old_imag + jul->const_i;
-				color++;
+				i++;
 			}
-			if (color < jul->iter)
-			{
-				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = color * 50;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = color * 50;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = color * 50;
-			}
-			else
-			{
-				image_string[(SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4] = 255 / 2;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 2] = 206 / 2;
-				image_string[((SCREEN_W * (jul->y + SCREEN_H / 2) + (jul->x + SCREEN_W / 2)) * 4) + 1] = 206 / 2;
-			}
+			if (i < jul->iter)
+				set_image(image_string, jul, i);
 			jul->x++;
 		}
 		jul->y++;
 	}
-	mlx_put_image_to_window(mlx->mlx, mlx->win, image, 0, 0);
-	mlx_string_put(mlx->mlx, mlx->win, 10, 10, 0xFFFFFF, "zoom");
-	mlx_string_put(mlx->mlx, mlx->win, 70, 10, 0xFFFFFF, ft_itoa(jul->zoom));
-	mlx_string_put(mlx->mlx, mlx->win, 10, 25, 0xFFFFFF, "iter");
-	mlx_string_put(mlx->mlx, mlx->win, 70, 25, 0xFFFFFF, ft_itoa(jul->iter));
+	put_to_screen(image, mlx, jul);
 }
 
 void				set_julia(t_jul *jul)

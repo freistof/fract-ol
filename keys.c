@@ -51,8 +51,6 @@ int				deal_key(int key, t_keeper *keeper)
 			keeper->jul->iter += 100;
 		if (key == MINUS)
 			keeper->jul->iter -= 100;
-		if (key == D)
-			switch(keeper->jul->depth);
 		julia(keeper->mlx, keeper->jul);
 	}
 	return (0);
@@ -105,10 +103,10 @@ int				mouse_press(int button, int x, int y, t_keeper *keeper)
 	}
 	if (keeper->jul)
 	{
-		if (button == SCROLL_UP || button == SCROLL_DOWN)
+		if (button == SCROLL_UP)
 		{
-			keeper->jul->addx += (x - SCREEN_W / 2) * 2;
-			keeper->jul->addy += (y - SCREEN_H / 2) * 2;
+			keeper->jul->addx = (x - SCREEN_W / 2);
+			keeper->jul->addy = (y - SCREEN_H / 2);
 		}
 		if (button == LEFT_CLICK)
 		{
