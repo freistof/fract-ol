@@ -24,18 +24,18 @@ void			choose(t_fractal *f)
 
 int				deal_key(int key, t_fractal *f)
 {
-	printf("key: %i\n", key);
+//	printf("key: %i\n", key);
 	if (key == 53)
 		exit(1);
 	mlx_clear_window(f->mlx, f->win);
 	if (key == LEFT)
-		f->addx += 10;
+		f->addx += 10 * f->zoom / 2;
 	if (key == RIGHT)
-		f->addx -= 10;
+		f->addx -= 10 * f->zoom / 2;
 	if (key == UP)
-		f->addy += 10;
+		f->addy += 10 * f->zoom / 2;
 	if (key == DOWN)
-		f->addy -= 10;
+		f->addy -= 10 * f->zoom / 2;
 	if (key == PLUS && f->iterations < 500)
 		f->iterations += 100;
 	if (key == MINUS && f->iterations > 100)
