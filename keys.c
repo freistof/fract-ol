@@ -56,12 +56,12 @@ int				mouse_move(int x, int y, t_fractal *f)
 {
 	if (x > 0 && x < SCREEN_W && y > 0 && y < SCREEN_H && f->click)
 	{
-		f->const_r = 0.95 * y / SCREEN_W + 1.1;
+		f->const_r = 0.95 * x / SCREEN_W + 1.1;
 		if (f->const_r > 1)
 			f->const_r -= 2;
 		else if (f->const_r < -1)
 			f->const_r += 2;
-		f->const_i = 0.95 * x / SCREEN_H + 1.8;
+		f->const_i = 0.95 * y / SCREEN_H + 1.8;
 		if (f->const_i > 1)
 			f->const_i -= 2;
 		else if (f->const_i < -1)
