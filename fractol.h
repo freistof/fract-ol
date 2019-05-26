@@ -17,6 +17,10 @@
 # include "libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
+<<<<<<< HEAD
+=======
+# include <pthread.h>
+>>>>>>> multi-threading
 
 # define SCREEN_W		600
 # define SCREEN_H		600
@@ -33,8 +37,12 @@
 # define MINUS			27
 # define ZERO			29
 
+# define NUM_THREADS	8
+# define DIVIDE			75
+
 typedef struct			s_fractal
 {
+	int					fi;
 	int					i;
 	int					x;
 	int					y;
@@ -73,9 +81,16 @@ void					julia(t_fractal *f);
 void					mandelbrot(t_fractal *f);
 void					burning_ship(t_fractal *f);
 
+<<<<<<< HEAD
 void					put_to_screen(t_fractal *f);
 void					iterate(t_fractal *f, long double addx, long double addy);
 long double				absolute_ld(long double x);
 void					do_colors(t_fractal *f);
+=======
+void					iterate(t_fractal *f, long double x, long double y);
+void					join_threads(pthread_t *threads);
+void					do_colors(t_fractal *f);
+void					*put_to_screen(void *args);
+>>>>>>> multi-threading
 
 #endif

@@ -12,7 +12,7 @@
 
 NAME = fractol
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -lpthread
 
 LIBM = minilibx_macos/
 

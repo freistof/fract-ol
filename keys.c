@@ -61,7 +61,7 @@ int				mouse_move(int x, int y, t_fractal *f)
 			f->const_r -= 2;
 		else if (f->const_r < -1)
 			f->const_r += 2;
-		f->const_i = 0.95 * y / SCREEN_H + 1.8;
+		f->const_i = 0.95 * y / SCREEN_H + 1;
 		if (f->const_i > 1)
 			f->const_i -= 2;
 		else if (f->const_i < -1)
@@ -85,7 +85,11 @@ int				mouse_press(int button, int x, int y, t_fractal *f)
 		f->z *= 1.5;
 	if (button == SCROLL_DOWN)
 		f->z /= 1.5;
+<<<<<<< HEAD
 	if (button == SCROLL_UP || button == SCROLL_DOWN)
+=======
+	if (button == SCROLL_UP)
+>>>>>>> multi-threading
 	{
 		f->addx += (x - SCREEN_W / 2) / f->z / 2;
 		f->addy += (y - SCREEN_H / 2) / f->z / 2;
