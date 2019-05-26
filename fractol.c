@@ -36,12 +36,12 @@ void				set_fractal(t_fractal *f, char argument)
 
 void				open_window(t_fractal *f, char argument)
 {
-//	mlx_hook(f->win, 2, 2, deal_key, f);
-//	mlx_hook(f->win, 17, 17, closing, NULL);
-//	mlx_hook(f->win, 4, 4, mouse_press, f);
+	mlx_hook(f->win, 2, 2, deal_key, f);
+	mlx_hook(f->win, 17, 17, closing, NULL);
+	mlx_hook(f->win, 4, 4, mouse_press, f);
 	if (argument == 'j')
 	{
-//		mlx_hook(f->win, 6, 6, mouse_move, f);
+		mlx_hook(f->win, 6, 6, mouse_move, f);
 		julia(f);
 	}
 	if (argument == 'm')

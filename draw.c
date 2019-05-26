@@ -13,6 +13,11 @@
 #include "fractol.h"
 
 /*
+** 	if (f->i < f->it)\
+		f->image_string[(SCREEN_W * (((f->y / 75) + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = f->i;
+*/
+
+/*
 ** puts image and text to screen
 */
 

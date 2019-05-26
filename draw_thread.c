@@ -21,8 +21,8 @@
 static void			*put_to_screen(void *args)
 {
 	t_fractal *f = (t_fractal *)args;
-	printf("put_to_screen: y: %i\n", f->y + SCREEN_H / 2 - 75);
-	mlx_put_image_to_window(f->mlx, f->win, f->image, 100, 100);
+	printf("put_to_screen: y: %i\n", (((f->y + SCREEN_H / 2) / 75) - 1) * 75);
+	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, (((f->y + SCREEN_H / 2) / 75) - 1) * 75);
 
 // 	mlx_string_put(f->mlx, f->win, 10, 10, 0xFFFFFF, "zoom");
 /*	mlx_string_put(f->mlx, f->win, 70, 10, 0xFFFFFF, ft_itoa(f->zoom));
@@ -33,11 +33,20 @@ static void			*put_to_screen(void *args)
 
 static void			do_colors(t_fractal *f)
 {
-//	printf("index: %i\n", ((SCREEN_W * ((f->y + SCREEN_H / 2) % 600) + ((f->x + SCREEN_W / 2)) / 600) * 4) + 2);
+	int y;
+	int x;
+
+	y = (f->y + SCREEN_H / 2) / 75;
+	x = f->x + SCREEN_W / 2;
+	//printf("y: %i\n", y);
+	//printf("x: %i\n", x);
+	//printf("index: %i\n", (SCREEN_W * y + x) * 4);
+/*	for (int i = 0; i < 100; i++)
+		f->image_string[i] = 100;*/
 	if (f->i < f->it)
-		f->image_string[0] = f->i;
+		f->image_string[(SCREEN_W * y + x) * 4] = f->i;
 	else
-		f->image_string[0] = 0;
+		f->image_string[(SCREEN_W * y + x) * 4] = 0;
 }
 
 static long double	absolute_ld(long double x)
@@ -74,14 +83,15 @@ static void			iterate(t_fractal *f, long double addx, long double addy)
 
 void				julia(t_fractal *f)
 {
-	pthread_t	threads[SCREEN_H];
+	pthread_t	threads[8];
+//	int			result;
 
 	f->y = SCREEN_H / 2 * -1;
 	while (f->y < SCREEN_H / 2)
 	{
 		if ((f->y + SCREEN_H / 2) % 75 == 0)
 		{
-			f->image = mlx_new_image(f->mlx, SCREEN_W, 1);
+			f->image = mlx_new_image(f->mlx, SCREEN_W, 75);
 			f->image_string = mlx_get_data_addr(f->image, f->bpp, f->sl, f->endian);
 		}
 		f->x = SCREEN_W / 2 * -1;
