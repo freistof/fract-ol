@@ -22,7 +22,7 @@ static void			put_to_screen(t_fractal *f)
 	mlx_string_put(f->mlx, f->win, 10, 10, 0xFFFFFF, "zoom");
 	mlx_string_put(f->mlx, f->win, 70, 10, 0xFFFFFF, ft_itoa(f->zoom));
 	mlx_string_put(f->mlx, f->win, 10, 25, 0xFFFFFF, "iter");
-	mlx_string_put(f->mlx, f->win, 70, 25, 0xFFFFFF, ft_itoa(f->iterations));	
+	mlx_string_put(f->mlx, f->win, 70, 25, 0xFFFFFF, ft_itoa(f->it));
 }
 
 static long double	absolute_ld(long double x)
@@ -58,14 +58,15 @@ void				julia(t_fractal *f)
 		while (f->x < SCREEN_W / 2)
 		{
 			f->i = 0;
-			f->new_real = (f->x + f->addx) / (f->zoom * SCREEN_W / 2);
-			f->new_imag = (f->y + f->addy) / (f->zoom * SCREEN_H / 2);
-			while (f->i < f->iterations && f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
+			f->new_real = (f->x + (f->addx * f->zoom)) / (f->zoom * SCREEN_W / 2);
+			f->new_imag = (f->y + (f->addy * f->zoom)) / (f->zoom * SCREEN_H / 2);
+			while (f->i < f->it && \
+			f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
 				iterate(f, f->const_r, f->const_i);
-			if (f->i < f->iterations)
-				f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = f->i * 5;
+			if (f->i < f->it)
+				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = f->i * 10;
 			else
-				f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = 0;
+				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = 0;
 			f->x++;
 		}
 		f->y++;
@@ -82,16 +83,17 @@ void				mandelbrot(t_fractal *f)
 		while (f->x < SCREEN_W / 2)
 		{
 			f->i = 0;
-			f->manx = (f->x + f->addx) / (f->zoom * SCREEN_W / 2);
-			f->many = (f->y + f->addy) / (f->zoom * SCREEN_H / 2);
+			f->manx = (f->x + (f->addx * f->zoom)) / (f->zoom * SCREEN_W / 2);
+			f->many = (f->y + (f->addy * f->zoom)) / (f->zoom * SCREEN_H / 2);
 			f->new_real = f->manx;
 			f->new_imag = f->many;
-			while (f->i < f->iterations && f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
+			while (f->i < f->it && \
+			f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
 				iterate(f, f->manx, f->many);
-			if (f->i < f->iterations)
-				f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = f->i * 5;
+			if (f->i < f->it)
+				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = f->i * 10;
 			else
-				f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = 0;
+				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = 0;
 			f->x++;
 		}
 		f->y++;
@@ -108,11 +110,12 @@ void				burning_ship(t_fractal *f)
 		while (f->x < SCREEN_W / 2)
 		{
 			f->i = 0;
-			f->manx = (f->x + f->addx) / (f->zoom * SCREEN_W / 2);
-			f->many = (f->y + f->addy) / (f->zoom * SCREEN_H / 2);
+			f->manx = (f->x + (f->addx * f->zoom)) / (f->zoom * SCREEN_W / 2);
+			f->many = (f->y + (f->addy * f->zoom)) / (f->zoom * SCREEN_H / 2);
 			f->new_real = f->manx;
 			f->new_imag = f->many;
-			while (f->i < f->iterations && f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
+			while (f->i < f->it && \
+			f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
 			{
 				f->old_real = f->new_real;
 				f->old_imag = f->new_imag;
@@ -120,10 +123,10 @@ void				burning_ship(t_fractal *f)
 				f->new_imag = (long double)absolute_ld(2 * f->old_real * f->old_imag + f->many);
 				f->i++;
 			}
-			if (f->i < f->iterations)
-				f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = f->i * 5;
+			if (f->i < f->it)
+				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = f->i;
 			else
-				f->image_string[(SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4] = 0;
+				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = 0;
 			f->x++;
 		}
 		f->y++;

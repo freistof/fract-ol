@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
-#define FRACTOL_H
+# define FRACTOL_H
 
 # include "minilibx_macos/mlx.h"
 # include "libft/libft.h"
@@ -31,30 +31,30 @@
 # define DOWN			125
 # define UP				126
 # define PLUS			24
-# define MINUS			25
+# define MINUS			27
 # define ZERO			29
 
-typedef struct 			s_fractal
+typedef struct			s_fractal
 {
 	int					i;
 	int					x;
 	int					y;
-	double				addx;
-	double				addy;
+	long double			addx;
+	long double			addy;
 	int					limit;
-	int					iterations;
-	double				new_real;
-	double				new_imag;
-	double				old_real;
-	double				old_imag;
-	double				const_r;
-	double				const_i;
-	double				manx;
-	double				many;
-	double				zoom;
+	int					it;
+	long double			new_real;
+	long double			new_imag;
+	long double			old_real;
+	long double			old_imag;
+	long double			const_r;
+	long double			const_i;
+	long double			manx;
+	long double			many;
+	long double			zoom;
 	int					click;
 	int					*bpp;
-	int					*sizeline;
+	int					*sl;
 	int					*endian;
 	void				*image;
 	char				*image_string;

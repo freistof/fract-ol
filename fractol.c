@@ -14,19 +14,19 @@
 
 void				set_fractal(t_fractal *f, char argument)
 {
-	f->limit = 1000;
+	f->limit = 4;
 	f->const_r = -0.835;
-	f->const_i = 0.2321;// 0.27015;
+	f->const_i = 0.2321;
 	f->zoom = 0.5;
 	f->click = 1;
 	f->addx = 0;
 	f->addy = 0;
-	f->iterations = 100;
+	f->it = 100;
 	f->bpp = malloc(sizeof(int));
-	f->sizeline = malloc(sizeof(int));
+	f->sl = malloc(sizeof(int));
 	f->endian = malloc(sizeof(int));
 	f->image = mlx_new_image(f->mlx, SCREEN_W, SCREEN_H);
-	f->image_string = mlx_get_data_addr(f->image, f->bpp, f->sizeline, f->endian);
+	f->image_string = mlx_get_data_addr(f->image, f->bpp, f->sl, f->endian);
 	f->type = argument;
 }
 
@@ -73,7 +73,7 @@ void				choose_fractal(char argument)
 ** 3 mandelbrots available
 */
 
-int				main(int argc, char **argv)
+int					main(int argc, char **argv)
 {
 	if (argc != 2)
 	{
@@ -83,7 +83,8 @@ int				main(int argc, char **argv)
 		ft_putendl("-b for Burning Ship");
 		return (0);
 	}
-	if (!ft_strequ(argv[1], "-m") && !ft_strequ(argv[1], "-j") && !ft_strequ(argv[1], "-b"))
+	if (!ft_strequ(argv[1], "-m") && !ft_strequ(argv[1], "-j") && \
+									!ft_strequ(argv[1], "-b"))
 		ft_putendl("not a valid fractal");
 	else
 		choose_fractal(argv[1][1]);
