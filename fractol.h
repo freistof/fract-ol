@@ -17,7 +17,6 @@
 # include "libft/libft.h"
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h> // remove
 
 # define SCREEN_W		600
 # define SCREEN_H		600
