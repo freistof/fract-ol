@@ -16,11 +16,6 @@
 ** puts image and text to screen
 */
 
-<<<<<<< HEAD
-void			put_to_screen(t_fractal *f)
-{
-	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, 0);
-=======
 void			*put_to_screen(void *args)
 {
 	t_fractal *f;
@@ -29,17 +24,10 @@ void			*put_to_screen(void *args)
 	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, \
 		(((f->y + SCREEN_H / 2) / DIVIDE) - 1) * DIVIDE);
 	return (NULL);
->>>>>>> multi-threading
 }
 
 void			do_colors(t_fractal *f)
 {
-<<<<<<< HEAD
-	if (f->i < f->it)
-		f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = f->i;
-	else
-		f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = 0;
-=======
 	int y;
 	int x;
 
@@ -50,7 +38,6 @@ void			do_colors(t_fractal *f)
 	else
 		f->image_string[f->fi] = 0;
 	f->fi += 4;
->>>>>>> multi-threading
 }
 
 long double		absolute_ld(long double x)
@@ -77,13 +64,6 @@ void			iterate(t_fractal *f, long double addx, long double addy)
 	}
 	else
 	{
-<<<<<<< HEAD
-		f->new_real = f->old_real * f->old_real - f->old_imag * f->old_imag + addx;
-		f->new_imag = 2 * f->old_real * f->old_imag + addy;	
-	}
-	f->i++;
-}
-=======
 		f->new_real = f->old_real * f->old_real - \
 		f->old_imag * f->old_imag + addx;
 		f->new_imag = 2 * f->old_real * f->old_imag + addy;
@@ -102,4 +82,3 @@ void			join_threads(pthread_t *threads)
 		i++;
 	}
 }
->>>>>>> multi-threading
