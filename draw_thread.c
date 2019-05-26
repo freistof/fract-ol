@@ -21,7 +21,7 @@
 static void			*put_to_screen(void *args)
 {
 	t_fractal *f = (t_fractal *)args;
-	printf("put_to_screen: y: %i\n", (((f->y + SCREEN_H / 2) / 75) - 1) * 75);
+//	printf("put_to_screen: y: %i\n", (((f->y + SCREEN_H / 2) / 75) - 1) * 75);
 	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, (((f->y + SCREEN_H / 2) / 75) - 1) * 75);
 
 // 	mlx_string_put(f->mlx, f->win, 10, 10, 0xFFFFFF, "zoom");
@@ -40,13 +40,14 @@ static void			do_colors(t_fractal *f)
 	x = f->x + SCREEN_W / 2;
 	//printf("y: %i\n", y);
 	//printf("x: %i\n", x);
-	//printf("index: %i\n", (SCREEN_W * y + x) * 4);
-/*	for (int i = 0; i < 100; i++)
+//	printf("index: %i\n", (SCREEN_W * y + x) * 4);
+/*	for (int i = 0; i < SCREEN_W * 75 * 4; i += 4)
 		f->image_string[i] = 100;*/
 	if (f->i < f->it)
-		f->image_string[(SCREEN_W * y + x) * 4] = f->i;
+		f->image_string[f->fi] = f->i * 100;
 	else
-		f->image_string[(SCREEN_W * y + x) * 4] = 0;
+		f->image_string[f->fi] = 0;
+	f->fi += 4;
 }
 
 static long double	absolute_ld(long double x)
@@ -84,15 +85,16 @@ static void			iterate(t_fractal *f, long double addx, long double addy)
 void				julia(t_fractal *f)
 {
 	pthread_t	threads[8];
-//	int			result;
+	int			result;
 
 	f->y = SCREEN_H / 2 * -1;
-	while (f->y < SCREEN_H / 2)
+	while (f->y < SCREEN_H / 2 + 1)
 	{
 		if ((f->y + SCREEN_H / 2) % 75 == 0)
 		{
 			f->image = mlx_new_image(f->mlx, SCREEN_W, 75);
 			f->image_string = mlx_get_data_addr(f->image, f->bpp, f->sl, f->endian);
+			f->fi = 0;
 		}
 		f->x = SCREEN_W / 2 * -1;
 		while (f->x < SCREEN_W / 2)
@@ -108,9 +110,16 @@ void				julia(t_fractal *f)
 		}
 		f->y++;
 		if ((f->y + SCREEN_H / 2) % 75 == 0)
-			pthread_create(&threads[(f->y + SCREEN_H / 2) / 75], NULL, put_to_screen, f);
+		{
+			result = pthread_create(&threads[(f->y + SCREEN_H / 2) / 75], NULL, put_to_screen, f);
+			assert(!result);
+		}
 	}
-//	put_to_screen(f);
+	for (int i = 0; i < 8; i++)
+	{
+		pthread_join(threads[i], NULL);
+		assert(!result);
+	}
 }
 
 void				mandelbrot(t_fractal *f)

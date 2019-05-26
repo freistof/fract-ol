@@ -34,10 +34,11 @@
 # define MINUS			27
 # define ZERO			29
 
-# define NUM_THREADS	8
+# define NUM_THREADS	20
 
 typedef struct			s_fractal
 {
+	int					fi;
 	int					i;
 	int					x;
 	int					y;
