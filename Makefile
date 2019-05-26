@@ -20,7 +20,7 @@ LIBFT = libft/
 
 LIBMS = minilibx_macos
 
-SRCS = fractol.c draw_thread.c keys.c
+SRCS = fractol.c loops.c draw.c keys.c
 
 all: $(NAME)
 
@@ -31,7 +31,7 @@ $(NAME):
 		-lmlx -L $(LIBFT) -lft -framework OpenGL -framework AppKit
 
 again:
-	gcc -o $(NAME) -lpthread $(SRCS) -I $(LIBMS) -L $(LIBMS) \
+	gcc -o $(NAME) $(FLAGS) $(SRCS) -I $(LIBMS) -L $(LIBMS) \
 		-lmlx -L $(LIBFT) -lft -framework OpenGL -framework AppKit
 
 clean:
