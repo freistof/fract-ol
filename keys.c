@@ -24,7 +24,6 @@ void			choose(t_fractal *f)
 
 int				deal_key(int key, t_fractal *f)
 {
-//	printf("key: %i\n", key);
 	if (key == 53)
 		exit(1);
 	mlx_clear_window(f->mlx, f->win);
@@ -36,7 +35,7 @@ int				deal_key(int key, t_fractal *f)
 		f->addy += 10 / f->zoom;
 	if (key == DOWN)
 		f->addy -= 10 / f->zoom;
-	if (key == PLUS && f->it < 500)
+	if (key == PLUS && f->it < 1000)
 		f->it += 100;
 	if (key == MINUS && f->it > 100)
 		f->it -= 100;
@@ -86,15 +85,10 @@ int				mouse_press(int button, int x, int y, t_fractal *f)
 		f->zoom *= 1.5;
 	if (button == SCROLL_DOWN)
 		f->zoom /= 1.5;
-	if (button == SCROLL_UP)
+	if (button == SCROLL_UP || button == SCROLL_DOWN)
 	{
 		f->addx += (x - SCREEN_W / 2) / f->zoom / 2;
 		f->addy += (y - SCREEN_H / 2) / f->zoom / 2;
-	}
-	if (button == SCROLL_DOWN)
-	{
-		f->addx -= (x - SCREEN_W / 2) / f->zoom / 2;
-		f->addy -= (y - SCREEN_H / 2) / f->zoom / 2;
 	}
 	mlx_clear_window(f->mlx, f->win);
 	choose(f);

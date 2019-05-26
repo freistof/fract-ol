@@ -25,6 +25,14 @@ static void			put_to_screen(t_fractal *f)
 	mlx_string_put(f->mlx, f->win, 70, 25, 0xFFFFFF, ft_itoa(f->it));
 }
 
+static void			do_colors(t_fractal *f)
+{
+			if (f->i < f->it / 3)
+				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = f->i * 10;
+			else
+				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = 0;
+}
+
 static long double	absolute_ld(long double x)
 {
 	if (x < 0)
@@ -38,11 +46,22 @@ static long double	absolute_ld(long double x)
 
 static void			iterate(t_fractal *f, long double addx, long double addy)
 {
-	f->old_real = f->new_real;
-	f->old_imag = f->new_imag;
-	f->new_real = f->old_real * f->old_real - f->old_imag * f->old_imag + addx;
-	f->new_imag = 2 * f->old_real * f->old_imag + addy;
-	f->i++;
+	if (f->type == 'b')
+	{
+		f->old_real = f->new_real;
+		f->old_imag = f->new_imag;
+		f->new_real = (long double)absolute_ld(f->old_real * f->old_real - f->old_imag * f->old_imag + f->manx);
+		f->new_imag = (long double)absolute_ld(2 * f->old_real * f->old_imag + f->many);
+		f->i++;
+	}
+	else
+	{
+		f->old_real = f->new_real;
+		f->old_imag = f->new_imag;
+		f->new_real = f->old_real * f->old_real - f->old_imag * f->old_imag + addx;
+		f->new_imag = 2 * f->old_real * f->old_imag + addy;
+		f->i++;
+	}
 }
 
 /*
@@ -63,10 +82,7 @@ void				julia(t_fractal *f)
 			while (f->i < f->it && \
 			f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
 				iterate(f, f->const_r, f->const_i);
-			if (f->i < f->it)
-				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = f->i * 10;
-			else
-				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = 0;
+			do_colors(f);
 			f->x++;
 		}
 		f->y++;
@@ -90,10 +106,7 @@ void				mandelbrot(t_fractal *f)
 			while (f->i < f->it && \
 			f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
 				iterate(f, f->manx, f->many);
-			if (f->i < f->it)
-				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = f->i * 10;
-			else
-				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = 0;
+			do_colors(f);
 			f->x++;
 		}
 		f->y++;
@@ -116,17 +129,8 @@ void				burning_ship(t_fractal *f)
 			f->new_imag = f->many;
 			while (f->i < f->it && \
 			f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
-			{
-				f->old_real = f->new_real;
-				f->old_imag = f->new_imag;
-				f->new_real = (long double)absolute_ld(f->old_real * f->old_real - f->old_imag * f->old_imag + f->manx);
-				f->new_imag = (long double)absolute_ld(2 * f->old_real * f->old_imag + f->many);
-				f->i++;
-			}
-			if (f->i < f->it)
-				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = f->i;
-			else
-				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = 0;
+				iterate(f, f->manx, f->many);
+			do_colors(f);
 			f->x++;
 		}
 		f->y++;
