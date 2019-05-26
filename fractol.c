@@ -25,8 +25,8 @@ void				set_fractal(t_fractal *f, char argument)
 	f->bpp = malloc(sizeof(int));
 	f->sl = malloc(sizeof(int));
 	f->endian = malloc(sizeof(int));
-	f->image = mlx_new_image(f->mlx, SCREEN_W, SCREEN_H);
-	f->image_string = mlx_get_data_addr(f->image, f->bpp, f->sl, f->endian);
+//	f->image = mlx_new_image(f->mlx, SCREEN_W, SCREEN_H);
+//	f->image_string = mlx_get_data_addr(f->image, f->bpp, f->sl, f->endian);
 	f->type = argument;
 }
 

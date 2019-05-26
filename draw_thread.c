@@ -11,28 +11,32 @@
 /* ************************************************************************** */
 
 #include "fractol.h"
+#include "pthread.h" // yes?
+#include "assert.h"
 
 /*
 ** puts image and text to screen
 */
 
-static void			put_to_screen(t_fractal *f)
+/*static void			*put_to_screen(void *args)
 {
-	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, 0);
+	t_fractal *f = (t_fractal *)args;
+	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, f->y / 75);
 	mlx_string_put(f->mlx, f->win, 10, 10, 0xFFFFFF, "zoom");
 	mlx_string_put(f->mlx, f->win, 70, 10, 0xFFFFFF, ft_itoa(f->zoom));
 	mlx_string_put(f->mlx, f->win, 10, 25, 0xFFFFFF, "iter");
 	mlx_string_put(f->mlx, f->win, 70, 25, 0xFFFFFF, ft_itoa(f->it));
-}
+	return (NULL);
+}*/
 
 static void			do_colors(t_fractal *f)
 {
-			if (f->i < f->it)
-				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = f->i;
-/*			else if (f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
-				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = f->i * 100;*/
-			else
-				f->image_string[((SCREEN_W * (f->y + SCREEN_H / 2) + (f->x + SCREEN_W / 2)) * 4) + 2] = 0;
+	printf("index: %i\n", ((SCREEN_W * ((f->y + SCREEN_H / 2) % 600) + ((f->x + SCREEN_W / 2)) / 600) * 4) + 2);
+/*	if (f->i < f->it)
+		f->image_string[((SCREEN_W * ((f->y + SCREEN_H / 2) % 600) + ((f->x + SCREEN_W / 2)) / 600) * 4) + 2] = f->i;
+	else
+		f->image_string[((SCREEN_W * ((f->y + SCREEN_H / 2) % 600) + ((f->x + SCREEN_W / 2)) / 600) * 4) + 2] = 100;*/
+	f->image_string[f->x * 4] = f->i;
 }
 
 static long double	absolute_ld(long double x)
@@ -69,9 +73,15 @@ static void			iterate(t_fractal *f, long double addx, long double addy)
 
 void				julia(t_fractal *f)
 {
+//	pthread_t	threads[NUM_THREADS];
+//	int			thread_args[NUM_THREADS];
+//	int			result;
+
 	f->y = SCREEN_H / 2 * -1;
 	while (f->y < SCREEN_H / 2)
 	{
+		f->image = mlx_new_image(f->mlx, SCREEN_W, 1);
+		f->image_string = mlx_get_data_addr(f->image, f->bpp, f->sl, f->endian);
 		f->x = SCREEN_W / 2 * -1;
 		while (f->x < SCREEN_W / 2)
 		{
@@ -84,9 +94,10 @@ void				julia(t_fractal *f)
 			do_colors(f);
 			f->x++;
 		}
+		mlx_put_image_to_window(f->mlx, f->win, f->image, 0, f->y + SCREEN_H / 2);
 		f->y++;
 	}
-	put_to_screen(f);
+//	put_to_screen(f);
 }
 
 void				mandelbrot(t_fractal *f)
@@ -110,7 +121,7 @@ void				mandelbrot(t_fractal *f)
 		}
 		f->y++;
 	}
-	put_to_screen(f);	
+//	put_to_screen(f);	
 }
 
 void				burning_ship(t_fractal *f)
@@ -134,5 +145,5 @@ void				burning_ship(t_fractal *f)
 		}
 		f->y++;
 	}
-	put_to_screen(f);	
+//	put_to_screen(f);	
 }
