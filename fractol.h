@@ -50,7 +50,7 @@ typedef struct			s_fractal
 	long double			const_i;
 	long double			manx;
 	long double			many;
-	long double			zoom;
+	long double			z;
 	int					click;
 	int					*bpp;
 	int					*sl;
@@ -72,5 +72,10 @@ void					set_fractal(t_fractal *f, char argument);
 void					julia(t_fractal *f);
 void					mandelbrot(t_fractal *f);
 void					burning_ship(t_fractal *f);
+
+void					put_to_screen(t_fractal *f);
+void					iterate(t_fractal *f, long double addx, long double addy);
+long double				absolute_ld(long double x);
+void					do_colors(t_fractal *f);
 
 #endif
