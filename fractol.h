@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include <pthread.h>
 
+# include <stdio.h> // remove
+
 # define SCREEN_W		600
 # define SCREEN_H		600
 
@@ -34,8 +36,8 @@
 # define MINUS			27
 # define ZERO			29
 
-# define NUM_THREADS	8
-# define DIVIDE			75
+# define NUM_THREADS	4
+# define DIVIDE			150
 
 typedef struct			s_fractal
 {
@@ -65,6 +67,7 @@ typedef struct			s_fractal
 	void				*mlx;
 	void				*win;
 	char				type;
+	int					*thread_no;
 }						t_fractal;
 
 int						deal_key(int key, t_fractal *f);

@@ -28,35 +28,7 @@ static void				mandelbrot_exc(t_fractal *f)
 	f->many = (f->y + (f->addy * f->z)) / (f->z * SCREEN_H / 2);
 }
 
-void					julia(t_fractal *f)
-{
-	pthread_t	threads[NUM_THREADS];
-
-	f->y = SCREEN_H / 2 * -1;
-	while (f->y < SCREEN_H / 2)
-	{
-		start_image(f);
-		f->x = SCREEN_W / 2 * -1;
-		while (f->x < SCREEN_W / 2)
-		{
-			f->i = 0;
-			f->new_real = (f->x + (f->addx * f->z)) / (f->z * SCREEN_W / 2);
-			f->new_imag = (f->y + (f->addy * f->z)) / (f->z * SCREEN_H / 2);
-			while (f->i < f->it && \
-			f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
-				iterate(f, f->const_r, f->const_i);
-			do_colors(f);
-			f->x++;
-		}
-		f->y++;
-		if ((f->y + SCREEN_H / 2) % DIVIDE == 0)
-			pthread_create(&threads[(f->y - DIVIDE + SCREEN_H / 2) / DIVIDE], \
-				NULL, put_to_screen, f);
-	}
-	join_threads(threads);
-}
-
-void					mandelbrot(t_fractal *f)
+void					old_mandelbrot(t_fractal *f)
 {
 	pthread_t	threads[NUM_THREADS];
 
@@ -74,6 +46,34 @@ void					mandelbrot(t_fractal *f)
 			while (f->i < f->it && \
 			f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
 				iterate(f, f->manx, f->many);
+			do_colors(f);
+			f->x++;
+		}
+		f->y++;
+		if ((f->y + SCREEN_H / 2) % DIVIDE == 0)
+			pthread_create(&threads[(f->y - DIVIDE + SCREEN_H / 2) / DIVIDE], \
+				NULL, put_to_screen, f);
+	}
+	join_threads(threads);
+}
+
+void					julia(t_fractal *f)
+{
+	pthread_t	threads[NUM_THREADS];
+
+	f->y = SCREEN_H / 2 * -1;
+	while (f->y < SCREEN_H / 2)
+	{
+		start_image(f);
+		f->x = SCREEN_W / 2 * -1;
+		while (f->x < SCREEN_W / 2)
+		{
+			f->i = 0;
+			f->new_real = (f->x + (f->addx * f->z)) / (f->z * SCREEN_W / 2);
+			f->new_imag = (f->y + (f->addy * f->z)) / (f->z * SCREEN_H / 2);
+			while (f->i < f->it && \
+			f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
+				iterate(f, f->const_r, f->const_i);
 			do_colors(f);
 			f->x++;
 		}

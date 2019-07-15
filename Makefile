@@ -20,7 +20,7 @@ LIBFT = libft/
 
 LIBMS = minilibx_macos
 
-SRCS = fractol.c loops.c draw.c keys.c
+SRCS = fractol.c loops.c draw.c keys.c threads.c
 
 all: $(NAME)
 
