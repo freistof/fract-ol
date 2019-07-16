@@ -93,6 +93,7 @@ void					*make_and_put_image(void *input)
 		f->y++;
 	}
 	put_thread_to_screen(f);
+	pthread_exit(NULL);
 	return (NULL);
 }
 
