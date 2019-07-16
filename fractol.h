@@ -19,8 +19,6 @@
 # include <unistd.h>
 # include <pthread.h>
 
-# include <stdio.h> // remove
-
 # define SCREEN_W		600
 # define SCREEN_H		600
 
@@ -67,7 +65,7 @@ typedef struct			s_fractal
 	void				*mlx;
 	void				*win;
 	char				type;
-	int					*thread_no;
+	int					thread_no;
 }						t_fractal;
 
 int						deal_key(int key, t_fractal *f);
@@ -85,5 +83,9 @@ void					iterate(t_fractal *f, long double x, long double y);
 void					join_threads(pthread_t *threads);
 void					do_colors(t_fractal *f);
 void					*put_to_screen(void *args);
+void					start_image(t_fractal *f);
+void					mandelbrot_exc(t_fractal *f);
+
+pthread_t				save_thread_id(pthread_t input, int which);
 
 #endif

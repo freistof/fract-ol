@@ -12,7 +12,7 @@
 
 #include "fractol.h"
 
-static void				start_image(t_fractal *f)
+void					start_image(t_fractal *f)
 {
 	if ((f->y + SCREEN_H / 2) % DIVIDE == 0)
 	{
@@ -22,8 +22,9 @@ static void				start_image(t_fractal *f)
 	}
 }
 
-static void				mandelbrot_exc(t_fractal *f)
+void					mandelbrot_exc(t_fractal *f)
 {
+	f->i = 0;
 	f->manx = (f->x + (f->addx * f->z)) / (f->z * SCREEN_W / 2);
 	f->many = (f->y + (f->addy * f->z)) / (f->z * SCREEN_H / 2);
 }

@@ -26,7 +26,6 @@ int				deal_key(int key, t_fractal *f)
 {
 	if (key == 53)
 		exit(1);
-	mlx_clear_window(f->mlx, f->win);
 	if (key == LEFT)
 		f->addx += 10 / f->z;
 	if (key == RIGHT)
@@ -41,6 +40,7 @@ int				deal_key(int key, t_fractal *f)
 		f->it -= 100;
 	if (key == ZERO)
 		set_fractal(f, f->type);
+	mlx_clear_window(f->mlx, f->win);
 	choose(f);
 	return (0);
 }
