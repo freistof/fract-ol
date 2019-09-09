@@ -14,6 +14,7 @@
 
 void				set_fractal(t_fractal *f, char argument)
 {
+	f->color_change = 0;
 	f->limit = 4;
 	f->const_r = -0.835;
 	f->const_i = 0.2321;
@@ -21,7 +22,7 @@ void				set_fractal(t_fractal *f, char argument)
 	f->click = 1;
 	f->addx = 0;
 	f->addy = 0;
-	f->it = 100;
+	f->it = 40;
 	f->bpp = malloc(sizeof(int));
 	f->sl = malloc(sizeof(int));
 	f->endian = malloc(sizeof(int));
@@ -47,6 +48,13 @@ void				open_window(t_fractal *f, char argument)
 	if (argument == 'b')
 		burning_ship(f);
 	mlx_loop(f->mlx);
+	while (1)
+	{
+		f->color_change += 1;
+		if (f->color_change == 3)
+			f->color_change = 0;
+		sleep(1);
+	}
 }
 
 /*

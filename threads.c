@@ -12,14 +12,20 @@
 
 #include "fractol.h"
 
+void					test_ft(void)
+{
+
+}
+
 void					join_and_cancel(pthread_t *threads)
 {
 	int	i;
+	int	ret;
 
 	i = 0;
 	while (i < NUM_THREADS)
 	{
-		pthread_join(threads[i], NULL);
+		ret = pthread_join(threads[i], NULL);
 		save_thread_id(threads[i], 1);
 		i++;
 	}
@@ -31,6 +37,7 @@ void					join_and_cancel(pthread_t *threads)
 		i++;
 	}
 	save_thread_id((pthread_t)-1, -1);
+	test_ft();
 }
 
 pthread_t				save_thread_id(pthread_t input, int which)
@@ -41,7 +48,7 @@ pthread_t				save_thread_id(pthread_t input, int which)
 
 	if (which == 1)
 	{
-		thread_ids[i] = input;
+		thread_ids[i] = input;	
 		i++;
 		return (0);
 	}
@@ -93,7 +100,7 @@ void					*make_and_put_image(void *input)
 		f->y++;
 	}
 	put_thread_to_screen(f);
-	pthread_exit(NULL);
+	// pthread_exit(NULL);
 	return (NULL);
 }
 
@@ -102,6 +109,7 @@ void					mandelbrot(t_fractal *f)
 	pthread_t			threads[NUM_THREADS];
 	t_fractal			fractal[NUM_THREADS];
 	int					i;
+	int					res;
 
 	i = 0;
 	while (i < NUM_THREADS)
@@ -109,7 +117,7 @@ void					mandelbrot(t_fractal *f)
 		f->y = SCREEN_H / 2 * -1 + (i * DIVIDE);
 		fractal[i] = *(t_fractal *)f;
 		fractal[i].thread_no = i;
-		pthread_create(&threads[i], NULL, make_and_put_image, &fractal[i]);
+		res = pthread_create(&threads[i], NULL, make_and_put_image, &fractal[i]);
 		i++;
 	}
 	join_and_cancel(threads);

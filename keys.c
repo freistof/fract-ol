@@ -24,6 +24,7 @@ void			choose(t_fractal *f)
 
 int				deal_key(int key, t_fractal *f)
 {
+	// printf("KEY: %i\n", key);
 	if (key == 53)
 		exit(1);
 	if (key == LEFT)
@@ -40,6 +41,13 @@ int				deal_key(int key, t_fractal *f)
 		f->it -= 100;
 	if (key == ZERO)
 		set_fractal(f, f->type);
+	if (key == SPACEBAR)
+	{
+		if (f->color_change == 2)
+			f->color_change = 0;
+		else
+			f->color_change++;
+	}
 	mlx_clear_window(f->mlx, f->win);
 	choose(f);
 	return (0);

@@ -17,6 +17,7 @@ void					start_image(t_fractal *f)
 	if ((f->y + SCREEN_H / 2) % DIVIDE == 0)
 	{
 		f->image = mlx_new_image(f->mlx, SCREEN_W, DIVIDE);
+		// printf("%p\n", f->image);
 		f->image_string = mlx_get_data_addr(f->image, f->bpp, f->sl, f->endian);
 		f->fi = 0;
 	}

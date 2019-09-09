@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include <pthread.h>
 
+# include <stdio.h>
+
 # define SCREEN_W		600
 # define SCREEN_H		600
 
@@ -33,12 +35,14 @@
 # define PLUS			24
 # define MINUS			27
 # define ZERO			29
+# define SPACEBAR		49
 
 # define NUM_THREADS	4
 # define DIVIDE			150
 
 typedef struct			s_fractal
 {
+	int					color_change;
 	int					fi;
 	int					i;
 	int					x;

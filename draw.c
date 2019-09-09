@@ -28,13 +28,11 @@ void			*put_to_screen(void *args)
 
 void			do_colors(t_fractal *f)
 {
-	int y;
-	int x;
-
-	y = (f->y + SCREEN_H / 2) / DIVIDE;
-	x = f->x + SCREEN_W / 2;
 	if (f->i < f->it)
-		f->image_string[f->fi] = f->i * 10;
+	{
+		f->image_string[f->fi + f->color_change] = f->i * 10;
+		// f->image_string[f->fi + 1] = f->i * 100;
+	}
 	else
 		f->image_string[f->fi] = 0;
 	f->fi += 4;
