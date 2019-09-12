@@ -114,4 +114,5 @@ void					burning_ship(t_fractal *f)
 				NULL, put_to_screen, f);
 	}
 	join_threads(threads);
+	printf("change\n");
 }

@@ -24,12 +24,15 @@ LIBMS = minilibx_macos
 
 SRCS = fractol.c loops.c draw.c keys.c threads.c
 
+OFILES := fractol.o loops.o draw.o keys.o threads.o
+
 all: $(NAME)
 
 $(NAME):
 		make -C $(LIBM)
 		make -C $(LIBFT)
-		gcc -o $(NAME) $(FLAGS) $(SRCS) -I $(LIBMS) -L $(LIBMS) \
+		gcc -c $(SRCS)
+		gcc -o $(NAME) $(FLAGS) $(OFILES) -I $(LIBMS) -L $(LIBMS) \
 		-lmlx -L $(LIBFT) -lft -framework OpenGL -framework AppKit
 
 again:

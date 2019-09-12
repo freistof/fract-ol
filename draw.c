@@ -30,11 +30,22 @@ void			do_colors(t_fractal *f)
 {
 	if (f->i < f->it)
 	{
-		f->image_string[f->fi + f->color_change] = f->i * 10;
+		if (f->i < 10)
+			f->image_string[f->fi] = f->i * 3;
+		else
+		{
+			f->image_string[f->fi] = f->i;
+			f->image_string[f->fi + 1] = f->i;
+//			f->image_string[f->fi + 2] = f->i * 2;
+		}
 		// f->image_string[f->fi + 1] = f->i * 100;
 	}
 	else
+	{
 		f->image_string[f->fi] = 0;
+		f->image_string[f->fi + 1] = 0;
+		f->image_string[f->fi + 2] = 0;
+	}
 	f->fi += 4;
 }
 

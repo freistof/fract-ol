@@ -15,7 +15,7 @@
 void				set_fractal(t_fractal *f, char argument)
 {
 	f->color_change = 0;
-	f->limit = 4;
+	f->limit = 10;
 	f->const_r = -0.835;
 	f->const_i = 0.2321;
 	f->z = 0.5;
@@ -38,7 +38,7 @@ void				open_window(t_fractal *f, char argument)
 	mlx_hook(f->win, 2, 2, deal_key, f);
 	mlx_hook(f->win, 17, 17, closing, NULL);
 	mlx_hook(f->win, 4, 4, mouse_press, f);
-	if (argument == 'j')
+/*	if (argument == 'j')
 	{
 		mlx_hook(f->win, 6, 6, mouse_move, f);
 		julia(f);
@@ -46,15 +46,9 @@ void				open_window(t_fractal *f, char argument)
 	if (argument == 'm')
 		mandelbrot(f);
 	if (argument == 'b')
-		burning_ship(f);
+		burning_ship(f);*/
+	threads(f);
 	mlx_loop(f->mlx);
-	while (1)
-	{
-		f->color_change += 1;
-		if (f->color_change == 3)
-			f->color_change = 0;
-		sleep(1);
-	}
 }
 
 /*

@@ -38,7 +38,7 @@
 # define SPACEBAR		49
 
 # define NUM_THREADS	4
-# define DIVIDE			150
+# define DIVIDE			(SCREEN_H / NUM_THREADS)
 
 typedef struct			s_fractal
 {
@@ -83,6 +83,7 @@ void					julia(t_fractal *f);
 void					mandelbrot(t_fractal *f);
 void					burning_ship(t_fractal *f);
 
+void					threads(t_fractal *f);
 void					iterate(t_fractal *f, long double x, long double y);
 void					join_threads(pthread_t *threads);
 void					do_colors(t_fractal *f);
