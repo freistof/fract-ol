@@ -37,7 +37,7 @@
 # define ZERO			29
 # define SPACEBAR		49
 
-# define NUM_THREADS	4
+# define NUM_THREADS	1
 # define DIVIDE			(SCREEN_H / NUM_THREADS)
 
 typedef struct			s_fractal

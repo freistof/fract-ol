@@ -24,15 +24,14 @@ void					join_and_cancel(pthread_t *threads)
 		save_thread_id(threads[i], 1);
 		i++;
 	}
-	save_thread_id((pthread_t)-1, -1);
+//	save_thread_id((pthread_t)-1, -1);
 	i = 0;
 	while (i < NUM_THREADS)
 	{
-		pthread_cancel(save_thread_id(0, 0));
+		pthread_cancel(save_thread_id(threads[i], 0));
 		i++;
 	}
 	save_thread_id((pthread_t)-1, -1);
-//	test_ft();
 }
 
 pthread_t				save_thread_id(pthread_t input, int which)
@@ -56,6 +55,12 @@ pthread_t				save_thread_id(pthread_t input, int which)
 	{
 		i = 0;
 		j = 0;
+		while (i < NUM_THREADS)
+		{
+			thread_ids[i] = NULL;
+			i++;
+		}
+		i = 0;
 		return (0);
 	}
 }
@@ -66,36 +71,6 @@ void					*put_thread_to_screen(void *args)
 
 	f = (t_fractal *)args;
 	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, f->thread_no * DIVIDE);
-	return (NULL);
-}
-
-void					*make_and_put_image(void *input)
-{
-	t_fractal			*f;
-	int					count;
-
-	f = (t_fractal *)input;
-	count = 0;
-	while (count < DIVIDE)
-	{
-		start_image(f);
-		f->x = SCREEN_W / 2 * -1;
-		while (f->x < SCREEN_W / 2)
-		{
-			mandelbrot_exc(f);
-			f->new_real = f->manx;
-			f->new_imag = f->many;
-			while (f->i < f->it && \
-			f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
-				iterate(f, f->manx, f->many);
-			do_colors(f);
-			f->x++;
-		}
-		count++;
-		f->y++;
-	}
-	put_thread_to_screen(f);
-	// pthread_exit(NULL);
 	return (NULL);
 }
 
@@ -113,20 +88,34 @@ void			*loops(void *input)
 		f->x = SCREEN_W / 2 * -1;
 		while (f->x < SCREEN_W / 2)
 		{
+			f->i = 0;
 			if (f->type == 'm' || f->type == 'b')
+			{
 				mandelbrot_exc(f);
-			f->new_real = f->manx;
-			f->new_imag = f->many;
+				f->new_real = f->manx;
+				f->new_imag = f->many;
+			}
+			else
+			{
+				f->new_real = (f->x + (f->addx * f->z)) / (f->z * SCREEN_W / 2);
+				f->new_imag = (f->y + (f->addy * f->z)) / (f->z * SCREEN_H / 2);
+			}
 			while (f->i < f->it && \
 			f->new_real * f->new_real + f->new_imag * f->new_imag < f->limit)
-				iterate(f, f->manx, f->many);
+			{
+				if (f->type == 'm' || f->type == 'b')
+					iterate(f, f->manx, f->many);
+				else
+					iterate(f, f->const_r, f->const_i);
+			}
 			do_colors(f);
 			f->x++;
 		}
 		count++;
 		f->y++;
 	}
-	put_thread_to_screen(f);
+	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, f->thread_no * DIVIDE);
+	// put_thread_to_screen(f);
 	// pthread_exit(NULL);
 	return (NULL);
 }
@@ -134,10 +123,13 @@ void			*loops(void *input)
 void			threads(t_fractal *f)
 {
 	pthread_t	threads[NUM_THREADS];
-	t_fractal	fractal[NUM_THREADS];
+	t_fractal	*fractal;
 	int			i;
 	int			res;
 
+	fractal = NULL;
+	while (!fractal)
+		fractal = malloc(sizeof(t_fractal) * NUM_THREADS);
 	i = 0;
 	while (i < NUM_THREADS)
 	{
@@ -148,24 +140,5 @@ void			threads(t_fractal *f)
 		i++;
 	}
 	join_and_cancel(threads);
-}
-
-
-void					mandelbrot(t_fractal *f)
-{
-	pthread_t			threads[NUM_THREADS];
-	t_fractal			fractal[NUM_THREADS];
-	int					i;
-	int					res;
-
-	i = 0;
-	while (i < NUM_THREADS)
-	{
-		f->y = SCREEN_H / 2 * -1 + (i * DIVIDE);
-		fractal[i] = *(t_fractal *)f;
-		fractal[i].thread_no = i;
-		res = pthread_create(&threads[i], NULL, make_and_put_image, &fractal[i]);
-		i++;
-	}
-	join_and_cancel(threads);
+	free(fractal);
 }

@@ -12,7 +12,7 @@
 
 NAME = fractol
 
-FLAGS = -Wall -Werror -Wextra -lpthread
+FLAGS = -Wall -Werror -Wextra -lpthread -g
 
 # FLAGS = -Wall -Werror -Wextra
 
@@ -33,10 +33,6 @@ $(NAME):
 		make -C $(LIBFT)
 		gcc -c $(SRCS)
 		gcc -o $(NAME) $(FLAGS) $(OFILES) -I $(LIBMS) -L $(LIBMS) \
-		-lmlx -L $(LIBFT) -lft -framework OpenGL -framework AppKit
-
-again:
-	gcc -o $(NAME) $(FLAGS) $(SRCS) -I $(LIBMS) -L $(LIBMS) \
 		-lmlx -L $(LIBFT) -lft -framework OpenGL -framework AppKit
 
 clean:

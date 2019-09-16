@@ -38,15 +38,8 @@ void				open_window(t_fractal *f, char argument)
 	mlx_hook(f->win, 2, 2, deal_key, f);
 	mlx_hook(f->win, 17, 17, closing, NULL);
 	mlx_hook(f->win, 4, 4, mouse_press, f);
-/*	if (argument == 'j')
-	{
+	if (argument == 'j')
 		mlx_hook(f->win, 6, 6, mouse_move, f);
-		julia(f);
-	}
-	if (argument == 'm')
-		mandelbrot(f);
-	if (argument == 'b')
-		burning_ship(f);*/
 	threads(f);
 	mlx_loop(f->mlx);
 }
@@ -60,7 +53,9 @@ void				choose_fractal(char argument)
 {
 	t_fractal *f;
 
-	f = malloc(sizeof(t_fractal));
+	f = NULL;
+	while (!f)
+		f = malloc(sizeof(t_fractal));
 	f->mlx = mlx_init();
 	f->win = mlx_new_window(f->mlx, SCREEN_W, SCREEN_H, "fract'ol");
 	set_fractal(f, argument);

@@ -14,17 +14,11 @@
 
 void			choose(t_fractal *f)
 {
-	if (f->type == 'j')
-		julia(f);
-	if (f->type == 'm')
-		mandelbrot(f);
-	if (f->type == 'b')
-		burning_ship(f);
+	threads(f);
 }
 
 int				deal_key(int key, t_fractal *f)
 {
-	// printf("KEY: %i\n", key);
 	if (key == 53)
 		exit(1);
 	if (key == LEFT)
@@ -75,7 +69,7 @@ int				mouse_move(int x, int y, t_fractal *f)
 		else if (f->const_i < -1)
 			f->const_i += 2;
 		mlx_clear_window(f->mlx, f->win);
-		julia(f);
+		threads(f);
 	}
 	return (0);
 }
@@ -89,15 +83,16 @@ int				mouse_press(int button, int x, int y, t_fractal *f)
 		else
 			f->click = 1;
 	}
-	if (button == SCROLL_UP)
-		f->z *= 1.5;
 	if (button == SCROLL_DOWN)
 		f->z /= 1.5;
 	if (button == SCROLL_UP)
 	{
+		f->z *= 1.5;
 		f->addx += (x - SCREEN_W / 2) / f->z / 2;
 		f->addy += (y - SCREEN_H / 2) / f->z / 2;
 	}
+	if (f->z < 0.05)
+		f->z *= 1.5;
 	mlx_clear_window(f->mlx, f->win);
 	choose(f);
 	return (0);

@@ -31,11 +31,11 @@ void			do_colors(t_fractal *f)
 	if (f->i < f->it)
 	{
 		if (f->i < 10)
-			f->image_string[f->fi] = f->i * 3;
+			f->image_string[f->fi] = f->i * 2;
 		else
 		{
-			f->image_string[f->fi] = f->i;
-			f->image_string[f->fi + 1] = f->i;
+			f->image_string[f->fi] = f->i * 2;
+			f->image_string[f->fi + 1] = f->i * 2;
 //			f->image_string[f->fi + 2] = f->i * 2;
 		}
 		// f->image_string[f->fi + 1] = f->i * 100;
@@ -55,10 +55,6 @@ long double		absolute_ld(long double x)
 		return (x * -1);
 	return (x);
 }
-
-/*
-** iterates over julia / mandelbrot
-*/
 
 void			iterate(t_fractal *f, long double addx, long double addy)
 {
