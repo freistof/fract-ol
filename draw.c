@@ -14,18 +14,17 @@
 
 void			do_colors(t_fractal *f)
 {
-	// printf("sizeof: %li\n", sizeof(f->image_string[f->fi]));
 	if (f->i < f->it)
 	{
-		if (f->i < f->it / 4)
+		if (f->i < f->it / 2)
 		{
-			f->image_string[f->fi] = f->i * 10;
+			f->image_string[f->fi + 2] = f->i * 10;
 			f->image_string[f->fi + 1] = 0;
-			f->image_string[f->fi + 2] = 0;
+			f->image_string[f->fi] = 127;
 		}
 		else
 		{
-			f->image_string[f->fi] = 100;
+			f->image_string[f->fi] = 127;
 			f->image_string[f->fi + 1] = f->i * 2;
 			f->image_string[f->fi + 2] = f->i * 4;
 		}

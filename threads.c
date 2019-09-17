@@ -65,7 +65,7 @@ void					*loops(void *input)
 		count++;
 		f->y++;
 	}
-	mlx_put_image_to_window(f->mlx, f->win, f->image, 0 + f->posx, f->thread_no * DIVIDE);
+	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, f->thread_no * DIVIDE);
 	return (NULL);
 }
 

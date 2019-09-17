@@ -47,8 +47,6 @@ typedef struct			s_fractal
 	int					i;
 	int					x;
 	int					y;
-	int					posx;
-	int					posy;
 	long double			addx;
 	long double			addy;
 	int					limit;
