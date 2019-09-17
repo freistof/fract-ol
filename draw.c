@@ -12,33 +12,17 @@
 
 #include "fractol.h"
 
-/*
-** puts image and text to screen
-*/
-
-void			*put_to_screen(void *args)
-{
-	t_fractal *f;
-
-	f = (t_fractal *)args;
-	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, \
-		(((f->y + SCREEN_H / 2) / DIVIDE) - 1) * DIVIDE);
-	return (NULL);
-}
-
 void			do_colors(t_fractal *f)
 {
 	if (f->i < f->it)
 	{
-		if (f->i < 10)
-			f->image_string[f->fi] = f->i * 2;
+		if (f->i < f->it / 4)
+			f->image_string[f->fi] = f->i * 10;
 		else
 		{
 			f->image_string[f->fi] = f->i * 2;
 			f->image_string[f->fi + 1] = f->i * 2;
-//			f->image_string[f->fi + 2] = f->i * 2;
 		}
-		// f->image_string[f->fi + 1] = f->i * 100;
 	}
 	else
 	{
@@ -58,6 +42,16 @@ long double		absolute_ld(long double x)
 
 void			iterate(t_fractal *f, long double addx, long double addy)
 {
+	if (f->type == 'm' || f->type == 'b')
+	{
+		addx = f->manx;
+		addy = f->many;
+	}
+	else
+	{
+		addx = f->const_r;
+		addy = f->const_i;
+	}
 	f->old_real = f->new_real;
 	f->old_imag = f->new_imag;
 	if (f->type == 'b')
@@ -73,7 +67,6 @@ void			iterate(t_fractal *f, long double addx, long double addy)
 		f->old_imag * f->old_imag + addx;
 		f->new_imag = 2 * f->old_real * f->old_imag + addy;
 	}
-	f->i++;
 }
 
 void			join_threads(pthread_t *threads)

@@ -37,7 +37,7 @@
 # define ZERO			29
 # define SPACEBAR		49
 
-# define NUM_THREADS	1
+# define NUM_THREADS	4
 # define DIVIDE			(SCREEN_H / NUM_THREADS)
 
 typedef struct			s_fractal
@@ -78,10 +78,6 @@ int						mouse_press(int button, int x, int y, t_fractal *f);
 int						mouse_move(int x, int y, t_fractal *f);
 
 void					set_fractal(t_fractal *f, char argument);
-
-void					julia(t_fractal *f);
-void					mandelbrot(t_fractal *f);
-void					burning_ship(t_fractal *f);
 
 void					threads(t_fractal *f);
 void					iterate(t_fractal *f, long double x, long double y);

@@ -22,16 +22,12 @@ void				set_fractal(t_fractal *f, char argument)
 	f->click = 1;
 	f->addx = 0;
 	f->addy = 0;
-	f->it = 40;
+	f->it = 100;
 	f->bpp = malloc(sizeof(int));
 	f->sl = malloc(sizeof(int));
 	f->endian = malloc(sizeof(int));
 	f->type = argument;
 }
-
-/*
-** sets key and mouse hooks and starts the loop
-*/
 
 void				open_window(t_fractal *f, char argument)
 {
@@ -43,11 +39,6 @@ void				open_window(t_fractal *f, char argument)
 	threads(f);
 	mlx_loop(f->mlx);
 }
-
-/*
-** sets one struct for mandelbrot or julia
-** another for burning ship
-*/
 
 void				choose_fractal(char argument)
 {
@@ -61,11 +52,6 @@ void				choose_fractal(char argument)
 	set_fractal(f, argument);
 	open_window(f, argument);
 }
-
-/*
-** shows usage when no arguments are given
-** 3 mandelbrots available
-*/
 
 int					main(int argc, char **argv)
 {

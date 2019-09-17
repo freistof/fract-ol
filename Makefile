@@ -12,9 +12,7 @@
 
 NAME = fractol
 
-FLAGS = -Wall -Werror -Wextra -lpthread -g
-
-# FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -lpthread
 
 LIBM = minilibx_macos/
 
@@ -22,9 +20,9 @@ LIBFT = libft/
 
 LIBMS = minilibx_macos
 
-SRCS = fractol.c loops.c draw.c keys.c threads.c
+SRCS = fractol.c draw.c keys.c threads.c
 
-OFILES := fractol.o loops.o draw.o keys.o threads.o
+OFILES := fractol.o draw.o keys.o threads.o
 
 all: $(NAME)
 
