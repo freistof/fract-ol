@@ -14,13 +14,16 @@
 
 void					start_image(t_fractal *f)
 {
-	if ((f->y + SCREEN_H / 2) % DIVIDE == 0)
-	{
-		f->image = mlx_new_image(f->mlx, SCREEN_W, DIVIDE);
-		f->image_string = mlx_get_data_addr(f->image, f->bpp, f->sl, f->endian);
-		f->fi = 0;
-	}
-	f->x = SCREEN_W / 2 * -1;
+	int		*bpp;
+	int		*sl;
+	int		*endian;
+
+	bpp = malloc(sizeof(int));
+	sl = malloc(sizeof(int));
+	endian = malloc(sizeof(int));
+	f->image = mlx_new_image(f->mlx, SCREEN_W, SCREEN_H);
+	f->image_string = mlx_get_data_addr(f->image, bpp, sl, endian);
+	f->fi = 0;
 }
 
 static void				set_variables(t_fractal *f)
@@ -40,16 +43,13 @@ static void				set_variables(t_fractal *f)
 	}
 }
 
-void					*loops(void *input)
+void					*loops(t_fractal *f)
 {
-	t_fractal			*f;
-	int					count;
-
-	f = (t_fractal *)input;
-	count = 0;
-	while (count < DIVIDE)
+	start_image(f);
+	f->y = SCREEN_H / 2 * -1;
+	while (f->y < SCREEN_H / 2)
 	{
-		start_image(f);
+		f->x = SCREEN_W / 2 * -1;
 		while (f->x < SCREEN_W / 2)
 		{
 			set_variables(f);
@@ -62,29 +62,8 @@ void					*loops(void *input)
 			do_colors(f);
 			f->x++;
 		}
-		count++;
 		f->y++;
 	}
-	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, f->thread_no * DIVIDE);
+	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, 0);
 	return (NULL);
-}
-
-void					threads(t_fractal *f)
-{
-	pthread_t	threads[NUM_THREADS];
-	t_fractal	fractal[NUM_THREADS];
-	int			i;
-	int			res;
-	void		*status;
-
-	i = 0;
-	while (i < NUM_THREADS)
-	{
-		f->y = SCREEN_H / 2 * -1 + (i * DIVIDE);
-		fractal[i] = *(t_fractal *)f;
-		fractal[i].thread_no = i;
-		res = pthread_create(&threads[i], NULL, loops, &fractal[i]);
-		res = pthread_join(threads[i], NULL);
-		i++;
-	}
 }
