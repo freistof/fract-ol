@@ -34,6 +34,7 @@ $(NAME):
 		-lmlx -L $(LIBFT) -lft -framework OpenGL -framework AppKit
 
 clean:
+		rm -rf $(OFILES)
 		make -C $(LIBM) clean
 		make -C $(LIBFT) clean
 
