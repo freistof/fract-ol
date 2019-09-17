@@ -14,14 +14,20 @@
 
 void			do_colors(t_fractal *f)
 {
+	// printf("sizeof: %li\n", sizeof(f->image_string[f->fi]));
 	if (f->i < f->it)
 	{
 		if (f->i < f->it / 4)
+		{
 			f->image_string[f->fi] = f->i * 10;
+			f->image_string[f->fi + 1] = 0;
+			f->image_string[f->fi + 2] = 0;
+		}
 		else
 		{
-			f->image_string[f->fi] = f->i * 2;
+			f->image_string[f->fi] = 100;
 			f->image_string[f->fi + 1] = f->i * 2;
+			f->image_string[f->fi + 2] = f->i * 4;
 		}
 	}
 	else
@@ -66,17 +72,5 @@ void			iterate(t_fractal *f, long double addx, long double addy)
 		f->new_real = f->old_real * f->old_real - \
 		f->old_imag * f->old_imag + addx;
 		f->new_imag = 2 * f->old_real * f->old_imag + addy;
-	}
-}
-
-void			join_threads(pthread_t *threads)
-{
-	int i;
-
-	i = 0;
-	while (i < NUM_THREADS + 1)
-	{
-		pthread_join(threads[i], NULL);
-		i++;
 	}
 }

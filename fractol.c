@@ -22,6 +22,8 @@ void				set_fractal(t_fractal *f, char argument)
 	f->click = 1;
 	f->addx = 0;
 	f->addy = 0;
+	f->posx = 0;
+	f->posy = 0;
 	f->it = 100;
 	f->bpp = malloc(sizeof(int));
 	f->sl = malloc(sizeof(int));

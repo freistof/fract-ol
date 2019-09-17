@@ -65,20 +65,18 @@ void					*loops(void *input)
 		count++;
 		f->y++;
 	}
-	mlx_put_image_to_window(f->mlx, f->win, f->image, 0, f->thread_no * DIVIDE);
+	mlx_put_image_to_window(f->mlx, f->win, f->image, 0 + f->posx, f->thread_no * DIVIDE);
 	return (NULL);
 }
 
 void					threads(t_fractal *f)
 {
 	pthread_t	threads[NUM_THREADS];
-	t_fractal	*fractal;
+	t_fractal	fractal[NUM_THREADS];
 	int			i;
 	int			res;
+	void		*status;
 
-	fractal = NULL;
-	while (!fractal)
-		fractal = malloc(sizeof(t_fractal) * NUM_THREADS);
 	i = 0;
 	while (i < NUM_THREADS)
 	{
@@ -89,5 +87,4 @@ void					threads(t_fractal *f)
 		res = pthread_join(threads[i], NULL);
 		i++;
 	}
-	free(fractal);
 }

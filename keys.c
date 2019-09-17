@@ -12,11 +12,6 @@
 
 #include "fractol.h"
 
-void			choose(t_fractal *f)
-{
-	threads(f);
-}
-
 int				deal_key(int key, t_fractal *f)
 {
 	if (key == 53)
@@ -36,7 +31,7 @@ int				deal_key(int key, t_fractal *f)
 	if (key == ZERO)
 		set_fractal(f, f->type);
 	mlx_clear_window(f->mlx, f->win);
-	choose(f);
+	threads(f);
 	return (0);
 }
 
@@ -87,6 +82,6 @@ int				mouse_press(int button, int x, int y, t_fractal *f)
 	if (f->z < 0.05)
 		f->z *= 1.5;
 	mlx_clear_window(f->mlx, f->win);
-	choose(f);
+	threads(f);
 	return (0);
 }
