@@ -61,9 +61,9 @@ void			iterate(t_fractal *f, long double addx, long double addy)
 	f->old_imag = f->new_imag;
 	if (f->type == 'b')
 	{
-		f->new_real = (long double)absolute_ld(f->old_real * \
+		f->new_real = absolute_ld(f->old_real * \
 			f->old_real - f->old_imag * f->old_imag + f->manx);
-		f->new_imag = (long double)absolute_ld(2 * f->old_real \
+		f->new_imag = absolute_ld(2 * f->old_real \
 			* f->old_imag + f->many);
 	}
 	else

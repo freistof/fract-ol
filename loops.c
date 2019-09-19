@@ -33,8 +33,16 @@ static void				set_variables(t_fractal *f)
 	{
 		f->manx = (f->x + (f->addx * f->z)) / (f->z * SCREEN_W / 2);
 		f->many = (f->y + (f->addy * f->z)) / (f->z * SCREEN_H / 2);
-		f->new_real = f->manx;
-		f->new_imag = f->many;
+		if (f->type == 'b')
+		{
+			f->new_real = absolute_ld(f->manx);
+			f->new_imag = absolute_ld(f->many);
+		}
+		else
+		{
+			f->new_real = f->manx;
+			f->new_imag = f->many;
+		}
 	}
 	else
 	{

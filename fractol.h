@@ -71,4 +71,6 @@ void					start_image(t_fractal *f);
 void					iterate(t_fractal *f, long double x, long double y);
 void					do_colors(t_fractal *f);
 
+long double				absolute_ld(long double x);
+
 #endif
