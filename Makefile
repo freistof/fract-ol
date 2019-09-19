@@ -12,7 +12,7 @@
 
 NAME = fractol
 
-FLAGS = -Wall -Werror -Wextra -lpthread
+FLAGS = -Wall -Werror -Wextra
 
 LIBM = minilibx_macos/
 
@@ -22,19 +22,15 @@ LIBMS = minilibx_macos
 
 SRCS = fractol.c draw.c keys.c loops.c
 
-OFILES := fractol.o draw.o keys.o loops.o
-
 all: $(NAME)
 
 $(NAME):
 		make -C $(LIBM)
 		make -C $(LIBFT)
-		gcc -c $(SRCS)
-		gcc -o $(NAME) $(FLAGS) $(OFILES) -I $(LIBMS) -L $(LIBMS) \
+		gcc -o $(NAME) $(FLAGS) $(SRCS) -I $(LIBMS) -L $(LIBMS) \
 		-lmlx -L $(LIBFT) -lft -framework OpenGL -framework AppKit
 
 clean:
-		rm -rf $(OFILES)
 		make -C $(LIBM) clean
 		make -C $(LIBFT) clean
 
