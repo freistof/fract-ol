@@ -23,6 +23,9 @@ void					start_image(t_fractal *f)
 	endian = malloc(sizeof(int));
 	f->image = mlx_new_image(f->mlx, SCREEN_W, SCREEN_H);
 	f->image_string = mlx_get_data_addr(f->image, bpp, sl, endian);
+	free(bpp);
+	free(sl);
+	free(endian);
 	f->fi = 0;
 }
 
